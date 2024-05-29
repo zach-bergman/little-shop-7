@@ -9,4 +9,8 @@ Rails.application.routes.draw do
     resources :merchants, only: [:index]
     resources :invoices, only: [:index]
   end
+
+  resources :merchants do
+    resources :dashboard, only: [:index]
+  end
 end
