@@ -2,16 +2,21 @@ require 'rails_helper'
 
 RSpec.describe 'Dashboard' do
   before(:each) do
-    @name1 = Faker::Name.name
-    @merchant1 = Merchant.create(name: @name1)
-    visit merchant_dashboard_index_path(@merchant1.id)
+    @merchant1 = Merchant.create(name: Faker::Name.name)
+    @merchant2 = Merchant.create(name: Faker::Name.name)
   end
+
   describe 'as a merchant, visiting merchant dashboard' do
     it 'shows the name of merchant' do
-      binding.pry
+      visit merchant_dashboard_index_path(@merchant1.id)
+
+      expect(page).to have_content(@merchant1.name)
+      expect(page).to_not have_content(@merchant2.name)
+
+      visit merchant_dashboard_index_path(@merchant2.id)
+
+      expect(page).to have_content(@merchant2.name)
+      expect(page).to_not have_content(@merchant1.name)
     end
-    # As a merchant,
-    # When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
-    # Then I see the name of my merchant
   end
 end
