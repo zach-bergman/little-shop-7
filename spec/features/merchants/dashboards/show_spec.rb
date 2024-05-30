@@ -22,8 +22,8 @@ RSpec.describe 'Dashboard' do
     it 'contains links to the items and invoices' do
       visit merchant_dashboard_index_path(@merchant1.id)
 
-      expect(page).to have_link(merchant_items_index_path(@merchant1))
-      expect(page).to have_link(merchant_invoices_index_path(@merchant1))
+      expect(page).to have_link("#{@merchant1.name} Items", href: merchant_items_path(@merchant1))
+      expect(page).to have_link("#{@merchant1.name} Invoices", href: merchant_invoices_path(@merchant1))
       # As a merchant,
       # When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
       # Then I see link to my merchant items index (/merchants/:merchant_id/items)
