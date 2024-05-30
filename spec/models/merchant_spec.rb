@@ -1,16 +1,11 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe Transaction, type: :model do
-  describe "relationships" do
-    it { should belong_to :invoice }
-  end
-
-  describe "validations" do
-    it { should validate_presence_of(:credit_card_number) }
-    it { should validate_presence_of(:credit_card_expiration_date) }
-  end
-
-  describe "enums" do
-    it { should define_enum_for(:result).with_values({ success: 0, failed: 1 }) }
+RSpec.describe Merchant, type: :model do
+  describe 'relationships' do
+    it { should have_many :items }
+    it { should have_many(:invoice_items).through(:items) }
+    it { should have_many(:invoices).through(:invoice_items) }
+    it { should have_many(:customers).through(:invoices) }
+    it { should have_many(:transactions).through(:invoices) }
   end
 end
