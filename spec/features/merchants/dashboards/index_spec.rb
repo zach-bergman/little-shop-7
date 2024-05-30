@@ -89,12 +89,10 @@ RSpec.describe 'Dashboard' do
     it 'shows top 5 customers by largest number of successful transactions' do
       visit merchant_dashboard_index_path(@merchant1.id)
 
-      # As a merchant,
-      # When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
-      # Then I see the names of the top 5 customers
-      # who have conducted the largest number of successful transactions with my merchant
-      # And next to each customer name I see the number of successful transactions they have
-      # conducted with my merchant
+      expect(page).to have_content(@customer_1.name)
+      expect(page).to have_content(@customer_4.name)
+      expect(page).to have_content(@customer_5.name)
+      expect(page).to have_content(@customer_2.name)
     end
   end
 end
