@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  get "/", to: "home#index"
+
   namespace :admin do
     resources :dashboard, only: [:index]
     resources :merchants, only: [:index]

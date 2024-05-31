@@ -82,19 +82,15 @@ RSpec.describe "Admin Dashboard Index", type: :feature do
     end
 
     describe "Top Customers" do
-      it "shows the names of the top 5 customers with most successful transactions" do
+      it "shows the names of the top 5 customers with most successful transactions and count of transactions" do
         within("div#top_customers") do
-          expect(page).to have_content(@customer_1.name)
-          expect(page).to have_content(@customer_4.name)
-          expect(page).to have_content(@customer_5.name)
-          expect(page).to have_content(@customer_2.name)
+          expect(page).to have_content("#{@customer_1.first_name} #{@customer_1.last_name} - 10 purchases")
+          expect(page).to have_content("#{@customer_4.first_name} #{@customer_4.last_name} - 8 purchases")
+          expect(page).to have_content("#{@customer_5.first_name} #{@customer_5.last_name} - 6 purchases")
+          expect(page).to have_content("#{@customer_2.first_name} #{@customer_2.last_name} - 4 purchases")
+          expect(page).to have_content("#{@customer_3.first_name} #{@customer_3.last_name} - 2 purchases")
         end
       end
-
-      # it "shows the number of successful transactions they have conducted - next to each customer name" do
-
-      # end
     end
-
   end
 end
