@@ -15,3 +15,12 @@
     <% end %>
   </ol>
 </div>
+
+<div id="incomplete_invoices">
+  <h2> Incomplete Invoices </h2>
+  <ul>
+    <% @invoices.incomplete_invoices.each do |invoice| %>
+      <li><%= link_to "Invoice ##{invoice.id}", admin_invoice_path(invoice.id)%></li>
+    <% end %>
+  </ul>
+</div>
