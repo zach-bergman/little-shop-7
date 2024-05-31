@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Invoice, type: :model do
   before(:each) do
@@ -65,8 +65,8 @@ RSpec.describe Invoice, type: :model do
     it { should have_many(:merchants).through(:items)}
   end
 
-  describe "enums" do
-    it { should define_enum_for(:status).with_values({ "in progress" => 0, "completed" => 1, "cancelled" => 2}) }
+  describe 'enums' do
+    it { should define_enum_for(:status).with_values({ 'in progress' => 0, 'completed' => 1, 'cancelled' => 2 }) }
   end
 
   describe "class methods" do
