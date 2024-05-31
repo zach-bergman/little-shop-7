@@ -1,10 +1,12 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe Customer, type: :model do
+RSpec.describe 'Dashboard' do
   before(:each) do
     # merchant
+    @merchant1 = Merchant.create(name: Faker::Name.name)
+    @merchant2 = Merchant.create(name: Faker::Name.name)
     @merchant_1 = create(:merchant)
-    
+
     # customers
     @customer_1 = create(:customer)
     @customer_2 = create(:customer)
@@ -52,20 +54,35 @@ RSpec.describe Customer, type: :model do
     @transactions_invoice_6 = create_list(:transaction, 9, invoice_id: @invoice_for_customer_6.id, result: 1) # failed
   end
 
-  describe "relationships" do
-    it { should have_many :invoices}
-  end
+  describe 'as a merchant, visiting merchant dashboard' do
+    it 'shows the name of merchant' do
+      visit merchant_dashboard_index_path(@merchant1.id)
 
-  describe "validations" do
-    it { should validate_presence_of :first_name}
-    it { should validate_presence_of :last_name}
-  end
+      expect(page).to have_content(@merchant1.name)
+      expect(page).to_not have_content(@merchant2.name)
 
-  describe "class methods" do
-    describe ".top_five_customers" do
-      it "returns the top five customers who had most successful transcations overall" do
-        expect(Customer.top_five_customers).to eq([@customer_1, @customer_4, @customer_5, @customer_2, @customer_3])
-        expect(Customer.top_five_customers).not_to include(@customer_6)
+      visit merchant_dashboard_index_path(@merchant2.id)
+
+      expect(page).to have_content(@merchant2.name)
+      expect(page).to_not have_content(@merchant1.name)
+    end
+
+    it 'contains links to the items and invoices' do
+      visit merchant_dashboard_index_path(@merchant1.id)
+
+      expect(page).to have_link("#{@merchant1.name} Items", href: merchant_items_path(@merchant1))
+      expect(page).to have_link("#{@merchant1.name} Invoices", href: merchant_invoices_path(@merchant1))
+    end
+
+    it 'shows top 5 customers by largest number of successful transactions' do
+      visit merchant_dashboard_index_path(@merchant_1.id)
+
+      within("div#fav_customers") do
+        expect(page).to have_content("#{@customer_1.first_name} #{@customer_1.last_name} - 20 purchases") # these transaction_counts are doubled??
+        expect(page).to have_content("#{@customer_4.first_name} #{@customer_4.last_name} - 16 purchases")
+        expect(page).to have_content("#{@customer_5.first_name} #{@customer_5.last_name} - 12 purchases")
+        expect(page).to have_content("#{@customer_2.first_name} #{@customer_2.last_name} - 8 purchases")
+        expect(page).to have_content("#{@customer_3.first_name} #{@customer_3.last_name} - 4 purchases")
       end
     end
   end
