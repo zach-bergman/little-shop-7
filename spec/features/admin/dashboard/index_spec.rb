@@ -12,6 +12,7 @@ RSpec.describe "Admin Dashboard Index", type: :feature do
     @customer_4 = create(:customer)
     @customer_5 = create(:customer)
     @customer_6 = create(:customer)
+    @customer_7 = create(:customer)
 
     # 10 items created, associated with merchant 1
     @items_for_merchant_1 = create_list(:item, 10, merchant_id: @merchant_1.id)
@@ -23,6 +24,7 @@ RSpec.describe "Admin Dashboard Index", type: :feature do
     @invoice_for_customer_4 = create(:invoice, customer_id: @customer_4.id, status: 1)
     @invoice_for_customer_5 = create(:invoice, customer_id: @customer_5.id, status: 1)
     @invoice_for_customer_6 = create(:invoice, customer_id: @customer_6.id, status: 2) # cancelled
+    @invoice_for_customer_7 = create(:invoice, customer_id: @customer_7.id, status: 2) # cancelled
 
     # invoice_items - Customer 1
     @invoice_items_1 = create(:invoice_item, invoice_id: @invoice_for_customer_1.id, item_id: @items_for_merchant_1.first.id, status: 2)
@@ -42,6 +44,9 @@ RSpec.describe "Admin Dashboard Index", type: :feature do
     # invoice_items - Customer 6
     @invoice_items_11 = create(:invoice_item, invoice_id: @invoice_for_customer_6.id, item_id: @items_for_merchant_1.first.id, status: 0)
     @invoice_items_12 = create(:invoice_item, invoice_id: @invoice_for_customer_6.id, item_id: @items_for_merchant_1.second.id, status: 0)
+    # invoice_items - Customer 7
+    @invoice_items_13 = create(:invoice_item, invoice_id: @invoice_for_customer_7.id, item_id: @items_for_merchant_1.third.id, status: 0)
+    @invoice_items_14 = create(:invoice_item, invoice_id: @invoice_for_customer_7.id, item_id: @items_for_merchant_1.fourth.id, status: 0)
 
     # transactions
     @transactions_invoice_1 = create_list(:transaction, 10, invoice_id: @invoice_for_customer_1.id, result: 0)
@@ -89,6 +94,24 @@ RSpec.describe "Admin Dashboard Index", type: :feature do
           expect(page).to have_content("#{@customer_5.first_name} #{@customer_5.last_name} - 6 purchases")
           expect(page).to have_content("#{@customer_2.first_name} #{@customer_2.last_name} - 4 purchases")
           expect(page).to have_content("#{@customer_3.first_name} #{@customer_3.last_name} - 2 purchases")
+        end
+      end
+    end
+
+    describe "User Story 22" do
+      it "shows a section for Incomplete Invoices - IDs" do
+        within("div#incomplete_invoices") do
+          expect(page).to have_content("Invoice ##{@invoice_for_customer_6.id}")
+          expect(page).to have_content("Invoice ##{@invoice_for_customer_7.id}")
+
+          expect(page).to_not have_content("Invoice ##{@invoice_for_customer_1.id}")
+        end
+      end
+
+      it "each invoice id links to that invoice's admin show page" do
+        within("div#incomplete_invoices") do
+          expect(page).to have_link("Invoice ##{@invoice_for_customer_6.id}")
+          expect(page).to have_link("Invoice ##{@invoice_for_customer_7.id}")
         end
       end
     end
