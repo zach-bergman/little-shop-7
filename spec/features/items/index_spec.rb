@@ -23,7 +23,7 @@ RSpec.describe 'items index' do
 
     it 'merchant item index has links to a merchant items show page' do
       visit merchant_items_path(@merchant_1)
-
+      save_and_open_page
       click_link @item_1.name
 
       expect(current_path).to eq(merchant_item_path(@merchant_1, @item_1))
