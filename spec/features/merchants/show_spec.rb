@@ -24,10 +24,6 @@ RSpec.describe 'Dashboard' do
 
       expect(page).to have_link("#{@merchant1.name} Items", href: merchant_items_path(@merchant1))
       expect(page).to have_link("#{@merchant1.name} Invoices", href: merchant_invoices_path(@merchant1))
-      # As a merchant,
-      # When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
-      # Then I see link to my merchant items index (/merchants/:merchant_id/items)
-      # And I see a link to my merchant invoices index (/merchants/:merchant_id/invoices)
     end
   end
 end
