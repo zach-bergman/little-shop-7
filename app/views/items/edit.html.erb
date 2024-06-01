@@ -1,0 +1,12 @@
+<% form_with model: @merchant_item, data: {turbo:false} do |f| %>
+  <%= f.label :name, "Name:" %>
+  <%= f.text_field :name %>
+
+  <%= f.label :description, "Description:" %>
+  <%= f.text_area :description %>
+
+  <%= f.label :unit_price, "Unit Price" %>
+  <%= f.text_field :unit_price %>
+
+  <%= f.submit "Submit" %>
+<% end %>
