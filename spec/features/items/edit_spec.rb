@@ -2,6 +2,8 @@ require 'rails_helper'
 
 Rspec.describe 'items edit' do
   before(:each) do
+    @merchant = create(:merchant)
+    @item = create(:item, merchant: @merchant)
   end
 
   describe 'as a merchant' do
