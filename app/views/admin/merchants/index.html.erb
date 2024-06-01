@@ -1,7 +1,31 @@
-<div id="merchant_names">
-  <ul>
-    <% @merchants.each do |merchant| %>
-      <li><%= link_to merchant.name, admin_merchant_path(merchant.id) %></li>
-    <% end %>
-  </ul>
+<div id="merchants_list">
+  <div id="enabled_merchants">
+    <h2> Enabled Merchants </h2>
+    <ul>
+      <% @enabled_merchants.each do |merchant| %>
+        <div id="merchant_<%= merchant.id %>">
+          <li>
+          <%= link_to merchant.name, admin_merchant_path(merchant.id) %>
+          <%= button_to "Disable", admin_merchant_path(merchant.id), params: { status: "disabled" },
+              method: :patch, data: { turbo: false } %>
+          </li>
+        </div>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="disabled_merchants">
+    <h2> Disabled Merchants </h2>
+    <ul>
+      <% @disabled_merchants.each do |merchant| %>
+        <div id="merchant_<%= merchant.id %>">
+          <li>
+          <%= link_to merchant.name, admin_merchant_path(merchant.id) %>
+          <%= button_to "Enable", admin_merchant_path(merchant.id), params: { status: "enabled" },
+              method: :patch, data: { turbo: false } %>
+          </li>
+        </div>
+      <% end %>
+    </ul>
+  </div>
 </div>
