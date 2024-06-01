@@ -71,4 +71,33 @@ RSpec.describe "Admin Merchants Index" do
       end
     end
   end
+
+  describe "User Story 28" do
+    it "shows enabled merchants in 'Enabled Merchants' section and disabled mercants in 'Disabled Merchants' section'" do
+
+      within("div#enabled_merchants") do
+        @merchants.each do |merchant|
+          expect(page).to have_content(merchant.name) if merchant.enabled?
+          expect(page).to_not have_content(merchant.name) if merchant.disabled?
+        end
+      end
+
+      within("div#disabled_merchants") do
+        @merchants.each do |merchant|
+          expect(page).to have_content(merchant.name) if merchant.disabled?
+          expect(page).to_not have_content(merchant.name) if merchant.enabled?
+        end
+      end
+    end
+  end
+
+  describe "User Story 29" do
+    it "shows a link to create a new merchant that directs to the admin merchant new page" do
+      expect(page).to have_link("Create New Merchant")
+
+      click_link("Create New Merchant")
+
+      expect(current_path).to eq(new_admin_merchant_path)
+    end
+  end
 end
