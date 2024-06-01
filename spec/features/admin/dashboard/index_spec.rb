@@ -86,7 +86,7 @@ RSpec.describe "Admin Dashboard Index", type: :feature do
       end
     end
 
-    describe "Top Customers" do
+    describe "User Story 21 - Top Customers" do
       it "shows the names of the top 5 customers with most successful transactions and count of transactions" do
         within("div#top_customers") do
           expect(page).to have_content("#{@customer_1.first_name} #{@customer_1.last_name} - 10 purchases")
@@ -112,6 +112,21 @@ RSpec.describe "Admin Dashboard Index", type: :feature do
         within("div#incomplete_invoices") do
           expect(page).to have_link("Invoice ##{@invoice_for_customer_6.id}")
           expect(page).to have_link("Invoice ##{@invoice_for_customer_7.id}")
+        end
+      end
+    end
+
+    describe "User Story 23" do
+      it "shows the date the invoice was created" do
+        within("div#incomplete_invoices") do
+            expect(page).to have_content("- #{@invoice_for_customer_6.format_date}")
+            expect(page).to have_content("- #{@invoice_for_customer_7.format_date}")
+        end
+      end
+
+      it "shows the incomplete invoices ordered from oldest date to newest date" do
+        within("div#incomplete_invoices") do
+            expect("#{@invoice_for_customer_6.id}").to appear_before("#{@invoice_for_customer_7.id}")
         end
       end
     end
