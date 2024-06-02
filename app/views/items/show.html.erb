@@ -3,3 +3,4 @@
   <li>Description: <%= @item.description %> </li>
   <li>Price: $<%= @item.unit_price.to_f/100 %> </li>
 </ul>
+<%= link_to "Edit Item", edit_merchant_item_path(@item.merchant, @item) %>
