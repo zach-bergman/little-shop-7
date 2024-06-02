@@ -34,4 +34,10 @@ RSpec.describe "Admin Invoice Show" do
             expect(page).to have_content("Status: pending")
         end
     end
+
+    it "should show the total revenue of the invoice" do
+        visit admin_invoice_path(@invoice)
+
+        expect(page).to have_content("Total Revenue: $95.00")
+    end
 end
