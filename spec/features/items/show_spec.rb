@@ -9,7 +9,7 @@ RSpec.describe 'items show' do
   describe 'as a merchant' do
     it 'merchant item show page displays item info' do
       visit merchant_item_path(@merchant, @item)
-      save_and_open_page
+
       expect(page).to have_content(@item.name)
       expect(page).to have_content("Description: #{@item.description}")
       expect(page).to have_content("Price: $#{@item.unit_price.to_f / 100}")
@@ -18,7 +18,9 @@ RSpec.describe 'items show' do
     it 'has a link to update the item' do
       visit merchant_item_path(@merchant, @item)
 
-      click_link 'Submit'
+      expect(page).to have_link('Edit Item')
+
+      click_link 'Edit Item'
 
       expect(current_path).to eq(edit_merchant_item_path(@merchant, @item))
     end

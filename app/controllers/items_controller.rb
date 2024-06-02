@@ -13,14 +13,14 @@ class ItemsController < ApplicationController
   end
 
   def update
-    item = Item.find(params[:id])
-    item.update(item_params)
-    redirect_to merchant_item_path(item.merchant, item)
+    @item = Item.find(params[:id])
+    @item.update(item_params)
+    redirect_to merchant_item_path(@item.merchant, @item)
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :unit_price)
+    params.permit(:name, :description, :unit_price)
   end
 end

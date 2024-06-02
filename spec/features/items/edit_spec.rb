@@ -10,13 +10,14 @@ RSpec.describe 'items edit' do
     it 'merchant item edit page has a form to edit the item' do
       visit edit_merchant_item_path(@merchant, @item)
 
-      fill_in 'Name:', with: 'New Item Name'
-      fill_in 'Description:', with: 'New Item Description'
+      fill_in 'Name', with: 'New Item Name'
+      fill_in 'Description', with: 'New Item Description'
 
-      click_button 'Update Item'
+      click_button 'Save'
+
       expect(current_path).to eq(merchant_item_path(@merchant, @item))
       expect(page).to have_content('New Item Name')
-      expect(page).to have_content('New Item Description')
+      expect(page).to have_content('Description: New Item Description')
     end
   end
 end

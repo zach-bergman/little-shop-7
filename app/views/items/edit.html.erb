@@ -1,12 +1,12 @@
-<% form_with model: @merchant_item, data: {turbo:false} do |f| %>
-  <%= f.label :name, "Name:" %>
+<%= form_with url: merchant_item_path(@item.merchant, @item), method: :patch, local: true, data: {turbo:false} do |f| %>
+  <%= f.label :name %>
   <%= f.text_field :name %>
 
-  <%= f.label :description, "Description:" %>
+  <%= f.label :description %>
   <%= f.text_area :description %>
 
-  <%= f.label :unit_price, "Unit Price" %>
+  <%= f.label :unit_price %>
   <%= f.text_field :unit_price %>
 
-  <%= f.submit "Submit" %>
+  <%= f.submit %>
 <% end %>
