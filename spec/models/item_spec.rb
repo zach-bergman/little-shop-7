@@ -8,7 +8,7 @@ RSpec.describe Item do
   end
 
   describe 'instance methods' do
-    describe 'top five items' do
+    describe 'best day' do
       before do
         @merchant_1 = create(:merchant)
 
@@ -25,7 +25,7 @@ RSpec.describe Item do
         @customer_2 = create(:customer)
         @customer_3 = create(:customer)
 
-        @invoice_1 = create(:invoice, customer: @customer_1)
+        @invoice_1 = create(:invoice, customer: @customer_1, status: 1, created_at: '2024-06-03 15:30:09')
         @invoice_2 = create(:invoice, customer: @customer_2)
         @invoice_3 = create(:invoice, customer: @customer_3)
         @invoice_4 = create(:invoice, customer: @customer_1)
@@ -45,11 +45,10 @@ RSpec.describe Item do
         @transaction_4 = create(:transaction, invoice: @invoice_4, result: 0)
         @transaction_5 = create(:transaction, invoice: @invoice_3, result: 0)
         @transaction_6 = create(:transaction, invoice: @invoice_6, result: 0)
-
-        visit merchant_items_path(@merchant_1)
       end
-      it 'displays the top five items' do
-        expect(merchant.top).to eq([@customer_1, @customer_2, @customer_3, @customer_8, customer3])
+
+      it 'displays the best day for each of the top five items' do
+        expect(@item_1.best_day).to eq(@invoice_1.created_at.to_date)
       end
     end
   end

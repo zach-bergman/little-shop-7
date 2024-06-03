@@ -109,6 +109,7 @@ RSpec.describe 'items index' do
 
         visit merchant_items_path(@merchant_1)
       end
+
       it 'displays the top five items' do
         within('.top-five-items') do
           expect(page).to have_link(@item_1.name)
@@ -117,6 +118,16 @@ RSpec.describe 'items index' do
           expect(page).to have_link(@item_8.name)
           expect(page).to have_link(@item_5.name)
           expect(page).to_not have_link(@item_6.name)
+        end
+      end
+
+      it 'displays the best selling day for each of the best selling items' do
+        within('.top-five-items') do
+          expect(page).to have_content("Top Selling day for #{@item_1.name} was #{@invoice_1.created_at.to_date}")
+          expect(page).to have_content("Top Selling day for #{@item_2.name} was #{@invoice_2.created_at.to_date}")
+          expect(page).to have_content("Top Selling day for #{@item_3.name} was #{@invoice_3.created_at.to_date}")
+          expect(page).to have_content("Top Selling day for #{@item_8.name} was #{@invoice_4.created_at.to_date}")
+          expect(page).to have_content("Top Selling day for #{@item_5.name} was #{@invoice_5.created_at.to_date}")
         end
       end
     end
