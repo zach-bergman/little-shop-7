@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_02_154328) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status"
   end
 
   create_table "transactions", force: :cascade do |t|
