@@ -14,8 +14,14 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    @item.update(item_params)
-    redirect_to merchant_item_path(@item.merchant, @item)
+
+    if params.has_key?(:status)
+      @item.update(status: params[:status])
+      redirect_to merchant_items_path(@item.merchant)
+    else
+      @item.update(item_params)
+      redirect_to merchant_item_path(@item.merchant, @item)
+    end
   end
 
   private
