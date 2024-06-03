@@ -1,7 +1,9 @@
-<h1> @invoice.id </h1>
+<h1><%= "#{@invoice.id}" %></h1>
 
 <div class="item-info">
-<% "Status: #{@invoice.status}" %>
-<% "Created at: #{@invoice.formatted_date}" %>
-<% "Customer: #{@invoice.customer.first_name} #{@invoice.customer.last_name}" %>
+<%= "Status: #{@invoice.status}" %>
+<br>
+<%= "Created at: #{@invoice.format_date}" %>
+<br>
+<%= "Customer: #{@invoice.customer.first_name} #{@invoice.customer.last_name}" %>
 </div>
