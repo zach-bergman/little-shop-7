@@ -61,7 +61,7 @@ RSpec.describe 'items index' do
         expect(page).to have_content(@item_3.name)
       end
     end
-    describe 'create a new item '
+    describe 'create a new item' do
       it 'has a link to create a new item' do
         visit merchant_items_path(@merchant_1)
 
