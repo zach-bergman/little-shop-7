@@ -20,11 +20,11 @@
     <p>Price: <%= number_to_currency(invoice_item.unit_price) %></p>
     <p>Status: <%= invoice_item.status %></p>
     </div>
-    <% end %>
-    </div>
-    
-    <div id="total-revenue">
-    <p>Total Revenue: <%= number_to_currency(@total_revenue) %></p>
-    </div>
-    
-    <%= link_to "Back to Invoices", admin_invoices_path %>
+  <% end %>
+</div>
+
+<div id="total-revenue">
+  <p>Total Revenue: <%= number_to_currency(@total_revenue) %></p>
+</div>
+
+<%= link_to "Back to Invoices", admin_invoices_path %>
