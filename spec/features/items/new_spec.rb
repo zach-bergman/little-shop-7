@@ -14,6 +14,8 @@ RSpec.describe 'items index' do
 
       click_button 'Create Item'
       expect(current_path).to eq(merchant_items_path(@merchant_1))
+
+      expect(page).to have_content('New Item')
     end
   end
 end
