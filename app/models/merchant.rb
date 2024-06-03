@@ -7,15 +7,25 @@ class Merchant < ApplicationRecord
 
   validates :name, presence: true
 
-  enum :status, [:disabled, :enabled], validate: true
+  enum :status, %i[disabled enabled], validate: true
 
   def top_five_customers
     customers
-    .joins(:transactions)
-    .where("result = 0")
-    .select("customers.*, count(transactions.id) as transaction_count")
-    .group(:id)
-    .order("transaction_count desc")
-    .limit(5)
+      .joins(:transactions)
+      .where('result = 0')
+      .select('customers.*, count(transactions.id) as transaction_count')
+      .group(:id)
+      .order('transaction_count desc')
+      .limit(5)
+  end
+
+  def top_five_items
+    items
+      .joins(invoices: :transactions)
+      .select('items.*, sum(invoice_items.quantity * invoice_items.unit_price) as total_sold')
+      .where(transactions: { result: 'success' })
+      .group('items.id')
+      .order(total_sold: :desc)
+      .limit(5)
   end
 end
