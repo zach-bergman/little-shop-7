@@ -1,5 +1,6 @@
 <h1>Invoice #<%= @invoice.id %></h1>
 
+<div id="invoice-info">
 <p>Status: <%= @invoice.status %></p>
 <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
 <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
@@ -14,6 +15,10 @@
       <p>Status: <%= invoice_item.status %></p>
     </div>
   <% end %>
+</div>
+
+<div id="total-revenue">
+  <p>Total Revenue: <%= number_to_currency(@total_revenue) %></p>
 </div>
 
 <%= link_to "Back to Invoices", admin_invoices_path %>
