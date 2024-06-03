@@ -17,8 +17,9 @@ RSpec.describe 'invoice show' do
     expect(page).to have_content(@invoice_1.id)
 
     within('.item-info') do
-      expect(page).to have_content("Description: #{@item.description}")
-      expect(page).to have_content('Price: $1.0')
+      expect(page).to have_content("Status: #{invoice_1.status}")
+      expect(page).to have_content("Created at: #{invoice_1.formatted_date}")
+      expect(page).to have_content("Customer: #{invoice_1.customer.first_name} #{invoice_1.customer.last_name}")
     end
   end
 end
