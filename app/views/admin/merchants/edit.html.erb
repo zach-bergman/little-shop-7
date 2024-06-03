@@ -1,0 +1,7 @@
+<div id="merchant_edit_form">
+  <%= form_with url: admin_merchant_path(@merchant), method: :patch, data: { turbo: false }, local: true do |f| %>
+    <%= f.label :name, "Enter Name: " %>
+    <%= f.text_field :name, value: @merchant.name %>
+    <%= f.submit "Submit" %>
+  <% end %>
+</div>

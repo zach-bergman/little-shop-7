@@ -76,6 +76,10 @@ RSpec.describe Merchant, type: :model do
     it { should validate_presence_of(:name) }
   end
 
+  describe 'enums' do
+    it { should define_enum_for(:status).with_values({ disabled: 0, enabled: 1}) }
+  end
+
   describe 'instance methods' do
     describe '#top_five_customers' do
       it 'returns the top five customers who had most successful transcations for merchant' do

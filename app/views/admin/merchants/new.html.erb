@@ -1,0 +1,8 @@
+<h1> Create New Merchant </h1>
+<div id="create_new_merchant_form" >
+  <%= form_with model: @merchant, data: { turbo: false } do |f| %>
+    <%= f.label :name, "Name:" %>
+    <%= f.text_field :name %>
+    <%= f.submit "Submit" %>
+  <% end %>
+</div>

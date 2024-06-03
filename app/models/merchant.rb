@@ -7,6 +7,8 @@ class Merchant < ApplicationRecord
 
   validates :name, presence: true
 
+  enum :status, [:disabled, :enabled], validate: true
+
   def top_five_customers
     customers
     .joins(:transactions)
