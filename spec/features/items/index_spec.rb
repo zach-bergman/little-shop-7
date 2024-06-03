@@ -23,10 +23,25 @@ RSpec.describe 'items index' do
 
     it 'merchant item index has links to a merchant items show page' do
       visit merchant_items_path(@merchant_1)
-      save_and_open_page
+
       click_link @item_1.name
 
       expect(current_path).to eq(merchant_item_path(@merchant_1, @item_1))
+    end
+
+    it 'item index has options status listed and a button to change status is present' do
+      visit merchant_items_path(@merchant_1)
+
+      expect(page).to have_button('Disable')
+      expect(@item_1.status).to eq('enabled')
+    end
+
+    it "item status button can change an item's status" do
+      visit merchant_items_path(@merchant_1)
+
+      expect(@item_1.status).to eq('enabled')
+      click_button 'Disable'
+      expect(@item_1.status).to eq('disabled')
     end
   end
 end
