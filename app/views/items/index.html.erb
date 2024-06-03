@@ -25,3 +25,11 @@
         <br>
     <% end %>
 </div>
+
+<div class="top-five-items">
+  <h2> Top Five Items </h2>
+    <% @top_five_items.each do |item| %>
+      <%= link_to item.name, merchant_item_path(@merchant, item) %>
+    <br>
+    <% end %>
+</div>
