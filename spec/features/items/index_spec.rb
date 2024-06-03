@@ -33,15 +33,33 @@ RSpec.describe 'items index' do
       visit merchant_items_path(@merchant_1)
 
       expect(page).to have_button('Disable')
-      expect(@item_1.status).to eq('enabled')
+      expect(@item_1.status).to eq('disabled')
     end
 
     it "item status button can change an item's status" do
       visit merchant_items_path(@merchant_1)
 
-      expect(@item_1.status).to eq('enabled')
-      click_button 'Disable'
       expect(@item_1.status).to eq('disabled')
+      click_button 'Disable'
+      expect(@item_1.status).to eq('enabled')
+    end
+
+    it 'groups items by status' do
+      visit merchant_items_path(@merchant_1)
+      expect(page).to have_content('Enabled Items')
+      expect(page).to have_content('Disabled Items')
+
+      within('.enabled-items') do
+        expect(page).to have_content(@item_1.name)
+        expect(page).to have_content(@item_2.name)
+        expect(page).to have_content(@item_3.name)
+      end
+
+      within('.disabled-items') do
+        expect(page).to_not have_content(@item_1.name)
+        expect(page).to_not have_content(@item_2.name)
+        expect(page).to_not have_content(@item_3.name)
+      end
     end
   end
 end
