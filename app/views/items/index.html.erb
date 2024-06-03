@@ -1,5 +1,11 @@
 <h1>Items</h1>
 
+
+<div class="create-item">
+  <%= link_to "Create New Item", new_merchant_item_path(@merchant) %>
+</div>
+
+
 <div class="enabled-items">
   <h2> Enabled Items </h2>
     <% @enabled_items.each do |item| %>
@@ -19,5 +25,13 @@
       <%= item.status %>
       <%= button_to "Enable", merchant_item_path(@merchant, item), method: :patch, params: { status: "enabled" } %>
         <br>
+    <% end %>
+</div>
+
+<div class="top-five-items">
+  <h2> Top Five Items </h2>
+    <% @top_five_items.each do |item| %>
+      <%= link_to item.name, merchant_item_path(@merchant, item) %>
+    <br>
     <% end %>
 </div>

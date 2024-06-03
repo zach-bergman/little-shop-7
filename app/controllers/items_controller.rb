@@ -4,6 +4,18 @@ class ItemsController < ApplicationController
     @items = @merchant.items
     @enabled_items = @items.where(status: 1)
     @disabled_items = @items.where(status: 0)
+    @top_five_items = @merchant.top_five_items
+  end
+
+  def new
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def create
+    @merchant = Merchant.find(params[:merchant_id])
+    @item = @merchant.items.create(item_params)
+    redirect_to merchant_items_path(@merchant)
+
   end
 
   def show
