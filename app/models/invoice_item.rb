@@ -5,7 +5,7 @@ class InvoiceItem < ApplicationRecord
   enum :status, %w[pending packaged shipped]
 
   def price
-    unit_price * 100
+    unit_price / 100
   end
 
   def total_cost
