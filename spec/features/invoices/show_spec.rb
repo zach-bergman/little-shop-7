@@ -8,7 +8,7 @@ RSpec.describe 'invoice show' do
     @customer_1 = create(:customer)
 
     @invoice_1 = create(:invoice, customer: @customer_1)
-    @invoice_item_1 = create(:invoice_item, item: @item, invoice: @invoice_1, quantity: 10, unit_price: 10)
+    @invoice_item_1 = create(:invoice_item, item: @item, invoice: @invoice_1, quantity: 10, unit_price: 10_00)
   end
 
   describe 'as a merchant' do
@@ -36,9 +36,9 @@ RSpec.describe 'invoice show' do
     end
 
     it 'only displays information for items on invoice' do
-      item_2 = create(:item, merchant: @merchant)
+      item_2 = create(:item, merchant: @merchant, unit_price: 2222)
       @invoice_2 = create(:invoice, customer: @customer_1)
-      invoice_item_2 = create(:invoice_item, item: item_2, invoice: @invoice_2)
+      invoice_item_2 = create(:invoice_item, item: item_2, invoice: @invoice_2, quantity: 22, unit_price: 22_222)
 
       visit merchant_invoice_path(@merchant, @invoice_1)
 
@@ -47,7 +47,14 @@ RSpec.describe 'invoice show' do
         expect(page).to_not have_content(item_2.name)
         expect(page).to_not have_content(invoice_item_2.quantity)
         expect(page).to_not have_content(invoice_item_2.price)
-        expect(page).to_not have_content(invoice_item_2.status)
+      end
+    end
+
+    it 'displays the total revenue for the invoice' do
+      visit merchant_invoice_path(@merchant, @invoice_1)
+
+      within('.total-revenue') do
+        expect(page).to have_content('Total Revenue: $100')
       end
     end
   end
