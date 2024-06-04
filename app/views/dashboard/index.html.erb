@@ -12,3 +12,12 @@
     <% end %>
   </ol>
 </div>
+
+<div id="items_ready_to_ship">
+  <h2> Items Ready to Ship </h2>
+  <ol>
+    <% @merchant.ready_to_ship.each do |item| %>
+      <li><%= item.name  %></li>
+    <% end %>
+  </ol>
+</div>

@@ -97,5 +97,17 @@ RSpec.describe 'Dashboard' do
         expect(page).to_not have_content(@customer_6.first_name)
       end
     end
+
+    it 'shows the items ready to be shipped' do
+      visit merchant_dashboard_index_path(@merchant_1.id)
+      save_and_open_page
+      within('div#items_ready_to_ship') do
+        expect(page).to have_content(@items_for_merchant_1.first.name)
+        expect(page).to have_content(@items_for_merchant_1.second.name)
+        expect(page).to have_content(@items_for_merchant_1.third.name)
+        expect(page).to have_content(@items_for_merchant_1.fourth.name)
+        expect(page).to_not have_content(@items_for_merchant_1.fifth.name)
+      end
+    end
   end
 end
