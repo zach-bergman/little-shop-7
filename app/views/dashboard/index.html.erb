@@ -1,6 +1,8 @@
-<%= @merchant.name %>
-<%= link_to "#{@merchant.name} Items", merchant_items_path(@merchant) %>
-<%= link_to "#{@merchant.name} Invoices", merchant_invoices_path(@merchant) %>
+<h1><%= @merchant.name %></h1>
+<br>
+<%= link_to "Items", merchant_items_path(@merchant) %>
+<br>
+<%= link_to "Invoices", merchant_invoices_path(@merchant) %>
 
 <div id="fav_customers">
   <h2> Favorite Customers </h2>

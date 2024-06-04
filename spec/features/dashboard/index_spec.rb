@@ -81,13 +81,13 @@ RSpec.describe 'Dashboard' do
     it 'contains links to the items and invoices' do
       visit merchant_dashboard_index_path(@merchant_1.id)
 
-      expect(page).to have_link("#{@merchant_1.name} Items", href: merchant_items_path(@merchant_1))
-      expect(page).to have_link("#{@merchant_1.name} Invoices", href: merchant_invoices_path(@merchant_1))
+      expect(page).to have_link('Items', href: merchant_items_path(@merchant_1))
+      expect(page).to have_link('Invoices', href: merchant_invoices_path(@merchant_1))
     end
 
     it 'shows top 5 customers by largest number of successful transactions' do
       visit merchant_dashboard_index_path(@merchant_1.id)
-
+      save_and_open_page
       within('div#fav_customers') do
         expect(page).to have_content("#{@customer_1.first_name} #{@customer_1.last_name} - 20 purchases") # these transaction_counts are doubled??
         expect(page).to have_content("#{@customer_4.first_name} #{@customer_4.last_name} - 16 purchases")
