@@ -19,6 +19,23 @@ class Merchant < ApplicationRecord
       .limit(5)
   end
 
+  def self.top_five_merchants_by_rev
+    joins(:transactions)
+    .where("transactions.result = 0")
+    .select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS total_revenue")
+    .group(:id)
+    .order(total_revenue: :desc)
+    .limit(5)
+  end
+
+  def top_selling_day
+    invoices
+    .joins(:invoice_items)
+    .select("DATE_TRUNC('day', invoices.created_at) AS date, SUM(invoice_items.quantity * invoice_items.unit_price) AS daily_revenue")
+    .group("date")
+    .order("daily_revenue DESC, date DESC").first.date
+  end
+
   def top_five_items
     items
       .joins(invoices: :transactions)
@@ -30,8 +47,11 @@ class Merchant < ApplicationRecord
   end
 
   def ready_to_ship
-    items.joins(invoice_items: :invoice)
-         .where(invoices: { status: 1 })
-         .distinct
+ 
+    invoice_items.select('invoice_items.*')
+                 .where(status: [1, 0])
+                 .joins(:invoice)
+                 .order(:created_at)
   end
 end
+
