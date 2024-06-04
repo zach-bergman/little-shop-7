@@ -67,5 +67,17 @@ RSpec.describe "Admin Invoice Show" do
       expect(page).to have_field(:status, with: "cancelled")
       expect(page).to_not have_field(:status, with: "completed")
     end
+
+    it "should show the invoice status and the update button" do
+        visit admin_invoice_path(@invoice)
+
+        expect(page).to have_select("invoice_status", selected: "in_progress")
+
+        select "completed", from: "invoice_status"
+        click_button "Update Invoice Status"
+
+        expect(current_path).to eq(admin_invoice_path(@invoice))
+        expect(page).to have_select('invoice_status', selected: 'completed')
+    end
   end
 end
