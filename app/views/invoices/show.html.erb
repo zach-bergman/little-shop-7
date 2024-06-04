@@ -1,9 +1,18 @@
 <h1><%= "#{@invoice.id}" %></h1>
 
-<div class="item-info">
+<div class="invoice-info">
 <%= "Status: #{@invoice.status}" %>
 <br>
 <%= "Created at: #{@invoice.format_date}" %>
 <br>
 <%= "Customer: #{@invoice.customer.first_name} #{@invoice.customer.last_name}" %>
+</div>
+
+<div class="invoice-items">
+  <h2> Items in this Invoice </h2>
+  <ul>
+    <% @invoice.invoice_items.each do |invoice_item| %>
+      <li><%= "#{invoice_item.item.name} - Quantity: #{invoice_item.quantity} - Price: $#{invoice_item.price} - Total: $#{invoice_item.total_cost} Status: #{invoice_item.status}" %></li>
+    <% end %>
+  </ul>
 </div>
