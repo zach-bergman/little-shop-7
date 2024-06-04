@@ -4,14 +4,14 @@ namespace :csv_load do
   desc "Load Customers Data"
   task customers: :environment do
     Customer.destroy_all
-
+    
     CSV.foreach("db/data/customers.csv", :headers => true) do |row|
       Customer.create!(row.to_hash)
     end
-
+    
     ActiveRecord::Base.connection.reset_pk_sequence!('customers')
   end
-
+  
   desc "Load InvoiceItems Data"
   task invoice_items: :environment do
     InvoiceItem.destroy_all
@@ -73,5 +73,5 @@ namespace :csv_load do
   end
 
   desc "Load All Data"
-  task all: [:merchants, :customers, :invoices, :items, :invoice_items, :transactions]
+  task all: [:invoice_items, :items, :transactions, :invoices, :merchants, :customers]
 end

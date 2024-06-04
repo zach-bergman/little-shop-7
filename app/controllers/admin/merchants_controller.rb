@@ -1,11 +1,9 @@
 class Admin::MerchantsController < ApplicationController
   def index
-
     @merchants = Merchant.all
     @enabled_merchants = Merchant.enabled
     @disabled_merchants = Merchant.disabled
     @top_five_merchants_by_rev = Merchant.top_five_merchants_by_rev
-    # binding.pry
   end
 
   def show
@@ -38,5 +36,4 @@ class Admin::MerchantsController < ApplicationController
   def merchant_params
     params.permit(:name, :status)
   end
-  #.require(:merchant) ???
 end
