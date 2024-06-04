@@ -87,13 +87,14 @@ RSpec.describe 'Dashboard' do
 
     it 'shows top 5 customers by largest number of successful transactions' do
       visit merchant_dashboard_index_path(@merchant_1.id)
-      save_and_open_page
+
       within('div#fav_customers') do
         expect(page).to have_content("#{@customer_1.first_name} #{@customer_1.last_name} - 20 purchases") # these transaction_counts are doubled??
         expect(page).to have_content("#{@customer_4.first_name} #{@customer_4.last_name} - 16 purchases")
         expect(page).to have_content("#{@customer_5.first_name} #{@customer_5.last_name} - 12 purchases")
         expect(page).to have_content("#{@customer_2.first_name} #{@customer_2.last_name} - 8 purchases")
         expect(page).to have_content("#{@customer_3.first_name} #{@customer_3.last_name} - 4 purchases")
+        expect(page).to_not have_content(@customer_6.first_name)
       end
     end
   end
