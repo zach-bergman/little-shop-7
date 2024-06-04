@@ -25,7 +25,7 @@ RSpec.describe Item do
         @customer_2 = create(:customer)
         @customer_3 = create(:customer)
 
-        @invoice_1 = create(:invoice, customer: @customer_1, status: 1, created_at: '2024-06-03 15:30:09')
+        @invoice_1 = create(:invoice, customer: @customer_1, status: 1, created_at: Date)
         @invoice_2 = create(:invoice, customer: @customer_2)
         @invoice_3 = create(:invoice, customer: @customer_3)
         @invoice_4 = create(:invoice, customer: @customer_1)

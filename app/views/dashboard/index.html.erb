@@ -1,12 +1,23 @@
-<%= @merchant.name %>
-<%= link_to "#{@merchant.name} Items", merchant_items_path(@merchant) %>
-<%= link_to "#{@merchant.name} Invoices", merchant_invoices_path(@merchant) %>
+<h1><%= @merchant.name %></h1>
+<br>
+<%= link_to "Items", merchant_items_path(@merchant) %>
+<br>
+<%= link_to "Invoices", merchant_invoices_path(@merchant) %>
 
 <div id="fav_customers">
   <h2> Favorite Customers </h2>
   <ol>
     <% @merchant.top_five_customers.each do |customer| %>
       <li><%= "#{customer.first_name} #{customer.last_name} - #{customer.transaction_count} purchases" %></li>
+    <% end %>
+  </ol>
+</div>
+
+<div id="items_ready_to_ship">
+  <h2> Items Ready to Ship </h2>
+  <ol>
+    <% @ready_to_ship.each do |invoice_item| %>
+      <li><%= "#{invoice_item.item.name} --- #{invoice_item.invoice.format_date}"  %></li>
     <% end %>
   </ol>
 </div>
