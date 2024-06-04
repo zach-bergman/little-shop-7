@@ -29,9 +29,16 @@ class Merchant < ApplicationRecord
       .limit(5)
   end
 
+  # def ready_to_ship
+  #   items.joins(invoice_items: :invoice)
+  #        .where(invoices: { status: 1 })
+  #        .distinct
+  # end
+
   def ready_to_ship
-    items.joins(invoice_items: :invoice)
-         .where(invoices: { status: 1 })
-         .distinct
+    invoice_items.select('invoice_items.*')
+                 .where(status: [1, 0])
+                 .joins(:invoice)
+                 .order(:created_at)
   end
 end

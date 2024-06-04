@@ -16,8 +16,8 @@
 <div id="items_ready_to_ship">
   <h2> Items Ready to Ship </h2>
   <ol>
-    <% @ready_to_ship.each do |item| %>
-      <li><%= item.name  %></li>
+    <% @ready_to_ship.each do |invoice_item| %>
+      <li><%= "#{invoice_item.item.name} --- #{invoice_item.invoice.format_date}"  %></li>
     <% end %>
   </ol>
 </div>
