@@ -19,7 +19,12 @@ class Invoice < ApplicationRecord
   end
 
   def total_revenue
-    invoice_items.sum("quantity * unit_price")
+    def total_revenue
+      total = 0
+      invoice_items.each do |invoice_item|
+        total += invoice_item.total_cost
+      end
+      total
+    end
   end
 end
-
