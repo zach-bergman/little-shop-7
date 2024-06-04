@@ -1,4 +1,6 @@
 class Invoice < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :customer
   has_many :transactions
   has_many :invoice_items
@@ -19,7 +21,7 @@ class Invoice < ApplicationRecord
   end
 
   def total_revenue
-    invoice_items.joins(:item)
-                 .sum('invoice_items.quantity * invoice_items.unit_price')
+    total = invoice_items.sum('unit_price * quantity')
+    number_to_currency(total / 100.0)
   end
 end

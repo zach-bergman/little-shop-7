@@ -10,13 +10,20 @@
 
 <div class="invoice-items">
   <h2> Items in this Invoice </h2>
-  <ul>
     <% @invoice.invoice_items.each do |invoice_item| %>
-      <li><%= "#{invoice_item.item.name} - Quantity: #{invoice_item.quantity} - Price: $#{invoice_item.price} - Total: $#{invoice_item.total_cost} Status: #{invoice_item.status}" %></li>
+      <ul>
+      <li><%= "#{invoice_item.item.name} - Quantity: #{invoice_item.quantity} - Price: #{number_to_currency(invoice_item.price)} - Total: #{number_to_currency(invoice_item.total_cost)} Status: #{invoice_item.status}" %></li>
+      </ul>
+      <div class="invoice-status">
+        <%= form_with url: merchant_invoice_path(@invoice), method: :patch, data: { turbo: false } do |f| %>
+            <%= f.label :status, "Status:" %>
+            <%= f.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
+            <%= f.submit "Update Invoice Status" %>
+          <% end %>
+      </div>
     <% end %>
-  </ul>
 </div>
 
 <div class="total-revenue">
-  <%= "Total Revenue: $#{@invoice.total_revenue}" %>
+  <%= "Total Revenue: #{@invoice.total_revenue}" %>
 </div>
