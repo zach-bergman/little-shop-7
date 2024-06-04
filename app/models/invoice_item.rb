@@ -7,4 +7,12 @@ class InvoiceItem < ApplicationRecord
 
   validates :quantity, presence: true
   validates :unit_price, presence: true
+
+  def price
+    unit_price / 100
+  end
+
+  def total_cost
+    quantity * price
+  end
 end

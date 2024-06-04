@@ -1,6 +1,39 @@
 <h1>Items</h1>
-<ul>
-  <% @items.each do |item| %>
-    <li><%= link_to item.name, merchant_item_path(@merchant, item) %></li>
-  <% end %>
-</ul>
+
+
+<div class="create-item">
+  <%= link_to "Create New Item", new_merchant_item_path(@merchant) %>
+</div>
+
+
+<div class="enabled-items">
+  <h2> Enabled Items </h2>
+    <% @enabled_items.each do |item| %>
+      <%= link_to item.name, merchant_item_path(@merchant, item) %>
+        <br>
+      <%= item.status %>
+      <%= button_to "Disable", merchant_item_path(@merchant, item), method: :patch, params: { status: "disabled" } %>
+        <br>
+    <% end %>
+</div>
+
+<div class="disabled-items">
+  <h2> Disabled Items </h2>
+    <% @disabled_items.each do |item| %>
+      <%= link_to item.name, merchant_item_path(@merchant, item) %>
+        <br>
+      <%= item.status %>
+      <%= button_to "Enable", merchant_item_path(@merchant, item), method: :patch, params: { status: "enabled" } %>
+        <br>
+    <% end %>
+</div>
+
+<div class="top-five-items">
+  <h2> Top Five Items </h2>
+    <% @top_five_items.each do |item| %>
+      <%= link_to item.name, merchant_item_path(@merchant, item) %>
+      <br>
+      <%= "Top Selling day for #{item.name} was #{item.best_day}" %>
+    <br>
+    <% end %>
+</div>
