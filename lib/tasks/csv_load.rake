@@ -27,8 +27,13 @@ namespace :csv_load do
   task merchants: :environment do
     Merchant.destroy_all
 
+    default_status = 'disabled'
+
     CSV.foreach("db/data/merchants.csv", :headers => true) do |row|
-      Merchant.create!(row.to_hash)
+      merchant_attributes = row.to_hash
+      merchant_attributes['status'] ||= default_status
+
+      Merchant.create!(merchant_attributes)
     end
 
     ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
