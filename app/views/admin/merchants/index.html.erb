@@ -38,7 +38,9 @@
     <ol>
         <% @top_five_merchants_by_rev.each do |merchant| %>
           <li><%= link_to merchant.name, admin_merchant_path(merchant.id) %> - <%= number_to_currency(merchant.total_revenue) %> in sales </li>
-          <p> Top day for <%= merchant.name %> was <%= merchant.top_selling_day.strftime("%m/%d/%y") %></p>
+          <div id="top_day">
+            <p> Top day for <%= merchant.name %> was <%= merchant.top_selling_day.strftime("%m/%d/%y") %></p>
+          </div>
         <% end %>
     </ol>
   </div>

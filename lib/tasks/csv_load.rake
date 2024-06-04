@@ -12,6 +12,17 @@ namespace :csv_load do
     ActiveRecord::Base.connection.reset_pk_sequence!('customers')
   end
 
+  desc "Load InvoiceItems Data"
+  task invoice_items: :environment do
+    InvoiceItem.destroy_all
+
+    CSV.foreach("db/data/invoice_items.csv", :headers => true) do |row|
+      InvoiceItem.create!(row.to_hash)
+    end
+
+    ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
+  end
+
   desc "Load Invoices Data"
   task invoices: :environment do
     Invoice.destroy_all
@@ -21,17 +32,6 @@ namespace :csv_load do
     end
 
     ActiveRecord::Base.connection.reset_pk_sequence!('invoices')
-  end
-
-  desc "Load Merchants Data"
-  task merchants: :environment do
-    Merchant.destroy_all
-
-    CSV.foreach("db/data/merchants.csv", :headers => true) do |row|
-      Merchant.create!(row.to_hash)
-    end
-
-    ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
   end
 
   desc "Load Items Data"
@@ -45,15 +45,20 @@ namespace :csv_load do
     ActiveRecord::Base.connection.reset_pk_sequence!('items')
   end
 
-  desc "Load InvoiceItems Data"
-  task invoice_items: :environment do
-    InvoiceItem.destroy_all
+  desc "Load Merchants Data"
+  task merchants: :environment do
+    Merchant.destroy_all
 
-    CSV.foreach("db/data/invoice_items.csv", :headers => true) do |row|
-      InvoiceItem.create!(row.to_hash)
+    default_status = 'disabled'
+
+    CSV.foreach("db/data/merchants.csv", :headers => true) do |row|
+      merchant_attributes = row.to_hash
+      merchant_attributes['status'] = default_status
+
+      Merchant.create!(merchant_attributes)
     end
 
-    ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
+    ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
   end
 
   desc "Load Transactions Data"
