@@ -31,7 +31,7 @@ class Merchant < ApplicationRecord
 
   def ready_to_ship
     items.joins(invoice_items: :invoice)
-         .where(invoices: { status: 'packaged' })
+         .where(invoices: { status: 1 })
          .distinct
   end
 end
