@@ -106,7 +106,8 @@ RSpec.describe 'Dashboard' do
         expect(page).to have_content(@items_for_merchant_1.second.name)
         expect(page).to have_content(@items_for_merchant_1.third.name)
         expect(page).to have_content(@items_for_merchant_1.fourth.name)
-        expect(page).to_not have_content(@items_for_merchant_1.fifth.name)
+        expect(page).to have_content(@items_for_merchant_1.fifth.name)
+        expect(page).to_not have_content(@items_for_merchant_1.last.name)
       end
     end
   end
