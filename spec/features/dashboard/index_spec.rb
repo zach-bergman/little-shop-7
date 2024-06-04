@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe 'Dashboard' do
   before(:each) do
     # merchant
-    @merchant1 = Merchant.create(name: Faker::Name.name)
-    @merchant2 = Merchant.create(name: Faker::Name.name)
     @merchant_1 = create(:merchant)
     @merchant_2 = create(:merchant)
 
@@ -72,19 +70,19 @@ RSpec.describe 'Dashboard' do
       visit merchant_dashboard_index_path(@merchant_1)
 
       expect(page).to have_content(@merchant_1.name)
-      expect(page).to_not have_content(@merchant2.name)
+      expect(page).to_not have_content(@merchant_2.name)
 
       visit merchant_dashboard_index_path(@merchant_2.id)
 
       expect(page).to have_content(@merchant_2.name)
-      expect(page).to_not have_content(@merchant1.name)
+      expect(page).to_not have_content(@merchant_1.name)
     end
 
     it 'contains links to the items and invoices' do
-      visit merchant_dashboard_index_path(@merchant1.id)
+      visit merchant_dashboard_index_path(@merchant_1.id)
 
-      expect(page).to have_link("#{@merchant1.name} Items", href: merchant_items_path(@merchant1))
-      expect(page).to have_link("#{@merchant1.name} Invoices", href: merchant_invoices_path(@merchant1))
+      expect(page).to have_link("#{@merchant_1.name} Items", href: merchant_items_path(@merchant_1))
+      expect(page).to have_link("#{@merchant_1.name} Invoices", href: merchant_invoices_path(@merchant_1))
     end
 
     it 'shows top 5 customers by largest number of successful transactions' do
