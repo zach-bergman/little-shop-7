@@ -47,9 +47,11 @@ class Merchant < ApplicationRecord
   end
 
   def ready_to_ship
+ 
     invoice_items.select('invoice_items.*')
                  .where(status: [1, 0])
                  .joins(:invoice)
                  .order(:created_at)
   end
 end
+
