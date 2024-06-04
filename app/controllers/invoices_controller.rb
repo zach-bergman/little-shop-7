@@ -10,7 +10,11 @@ class InvoicesController < ApplicationController
 
   def update
     invoice = Invoice.find(params[:id])
-    invoice.update(status: params[:status])
+    if invoice.update(status: params[:status])
+      flash[:success] = 'Invoice status updated'
+    else
+      flash[:error] = 'Invoice status not updated'
+    end
     redirect_to merchant_invoice_path(invoice.merchant, invoice)
   end
 
