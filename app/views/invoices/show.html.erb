@@ -20,6 +20,7 @@
             <%= f.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
             <%= f.submit "Update Invoice Status" %>
         <% end %>
+        <%= flash[:notice] %>
       </div>
     <% end %>
 </div>
