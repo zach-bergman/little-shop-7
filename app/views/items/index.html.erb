@@ -1,4 +1,8 @@
-<h1>Items</h1>
+<%= render "shared/merchant_navbar"%>
+
+<div class="invoice-id"
+  <h1>My Items</h1>
+</div>
 
 
 <div class="create-item">
@@ -28,12 +32,18 @@
     <% end %>
 </div>
 
-<div class="top-five-items">
-  <h2> Top Five Items </h2>
-    <% @top_five_items.each do |item| %>
-      <%= link_to item.name, merchant_item_path(@merchant, item) %>
-      <br>
-      <%= "Top Selling day for #{item.name} was #{item.best_day}" %>
-    <br>
-    <% end %>
+
+<div class="row-right">
+  <div class="column-right">
+    <div class="top-five-items">
+      <h2> Top Five Items </h2>
+        <% @top_five_items.each do |item| %>
+          <%= link_to item.name, merchant_item_path(@merchant, item) %>
+          <br>
+          <%= "Top Selling day for #{item.name} was #{item.best_day}" %>
+        <br>
+        <% end %>
+    </div>
+  </div>
 </div>
+

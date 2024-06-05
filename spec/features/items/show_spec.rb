@@ -18,9 +18,9 @@ RSpec.describe 'items show' do
     it 'has a link to update the item' do
       visit merchant_item_path(@merchant, @item)
 
-      expect(page).to have_link('Edit Item')
+      expect(page).to have_link('Update Item')
 
-      click_link 'Edit Item'
+      click_link 'Update Item'
 
       expect(current_path).to eq(edit_merchant_item_path(@merchant, @item))
     end

@@ -1,11 +1,17 @@
-<div id="header">
-  <h1>"Admin Dashboard"</h1>
+<%= render 'shared/admin_navbar' %>
+
+<div class="column-left">
+  <div id="incomplete_invoices">
+    <h2> Incomplete Invoices </h2>
+    <ul>
+      <% @invoices.incomplete_invoices.each do |invoice| %>
+        <li><%= link_to "Invoice ##{invoice.id}", admin_invoice_path(invoice.id)%>
+        - <%= "#{invoice.format_date}" %></li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 
-<div id="links">
-  <%= link_to "Merchants", admin_merchants_path %>
-  <%= link_to "Invoices", admin_invoices_path %>
-</div>
 
 <div id="top_customers">
   <h2> Top Customers </h2>
@@ -14,14 +20,4 @@
       <li><%= "#{customer.first_name} #{customer.last_name} - #{customer.transaction_count} purchases" %></li>
     <% end %>
   </ol>
-</div>
-
-<div id="incomplete_invoices">
-  <h2> Incomplete Invoices </h2>
-  <ul>
-    <% @invoices.incomplete_invoices.each do |invoice| %>
-      <li><%= link_to "Invoice ##{invoice.id}", admin_invoice_path(invoice.id)%>
-      - <%= "#{invoice.format_date}" %></li>
-    <% end %>
-  </ul>
 </div>
