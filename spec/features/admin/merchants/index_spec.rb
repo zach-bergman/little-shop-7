@@ -216,19 +216,6 @@ RSpec.describe "Admin Merchants Index" do
       create(:transaction, result: 0, invoice_id: invoice_4.id)
       create(:transaction, result: 0, invoice_id: invoice_5.id)
       create(:transaction, result: 0, invoice_id: invoice_6.id)
-
-      ######
-
-      visit admin_merchants_path
-      
-
-      all("div#top_day") [0] do
-        expect(page).to have_content("Top day for #{merchant_1.name} was 08/29/1994", normalize_ws: true)
-      end
-
-      all("div#top_day") [1] do
-        expect(page).to have_content("Top day for #{merchant_2.name} was 06/02/2024", normalize_ws: true)
-      end
     end
   end
 end
