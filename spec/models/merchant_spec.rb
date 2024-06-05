@@ -186,54 +186,53 @@ RSpec.describe Merchant, type: :model do
     end
   end
   
-    describe 'top five items' do
-      before do
-        @merchant_1 = create(:merchant)
+  describe 'top five items' do
+    before do
+      @merchant_1 = create(:merchant)
 
-        @item_1 = create(:item, merchant: @merchant_1, status: 1)
-        @item_2 = create(:item, merchant: @merchant_1, status: 1)
-        @item_3 = create(:item, merchant: @merchant_1, status: 1)
-        @item_5 = create(:item, merchant: @merchant_1, status: 1)
-        @item_6 = create(:item, merchant: @merchant_1, status: 1)
-        @item_7 = create(:item, merchant: @merchant_1, status: 1)
-        @item_8 = create(:item, merchant: @merchant_1, status: 1)
-        @item_9 = create(:item, merchant: @merchant_1, status: 1)
+      @item_1 = create(:item, merchant: @merchant_1, status: 1)
+      @item_2 = create(:item, merchant: @merchant_1, status: 1)
+      @item_3 = create(:item, merchant: @merchant_1, status: 1)
+      @item_5 = create(:item, merchant: @merchant_1, status: 1)
+      @item_6 = create(:item, merchant: @merchant_1, status: 1)
+      @item_7 = create(:item, merchant: @merchant_1, status: 1)
+      @item_8 = create(:item, merchant: @merchant_1, status: 1)
+      @item_9 = create(:item, merchant: @merchant_1, status: 1)
 
-        @customer_1 = create(:customer)
-        @customer_2 = create(:customer)
-        @customer_3 = create(:customer)
+      @customer_1 = create(:customer)
+      @customer_2 = create(:customer)
+      @customer_3 = create(:customer)
 
-        @invoice_1 = create(:invoice, customer: @customer_1)
-        @invoice_2 = create(:invoice, customer: @customer_2)
-        @invoice_3 = create(:invoice, customer: @customer_3)
-        @invoice_4 = create(:invoice, customer: @customer_1)
-        @invoice_5 = create(:invoice, customer: @customer_2)
-        @invoice_6 = create(:invoice, customer: @customer_3)
+      @invoice_1 = create(:invoice, customer: @customer_1)
+      @invoice_2 = create(:invoice, customer: @customer_2)
+      @invoice_3 = create(:invoice, customer: @customer_3)
+      @invoice_4 = create(:invoice, customer: @customer_1)
+      @invoice_5 = create(:invoice, customer: @customer_2)
+      @invoice_6 = create(:invoice, customer: @customer_3)
 
-        @invoice_item_1 = create(:invoice_item, item: @item_1, invoice: @invoice_1, quantity: 10, unit_price: 10, status: 1)
-        @invoice_item_2 = create(:invoice_item, item: @item_2, invoice: @invoice_2, quantity: 8, unit_price: 9, status: 1)
-        @invoice_item_5 = create(:invoice_item, item: @item_5, invoice: @invoice_5, quantity: 5, unit_price: 5, status: 1)
-        @invoice_item_4 = create(:invoice_item, item: @item_8, invoice: @invoice_4, quantity: 5, unit_price: 4, status: 1)
-        @invoice_item_3 = create(:invoice_item, item: @item_3, invoice: @invoice_3, quantity: 3, unit_price: 3, status: 0)
-        @invoice_item_6 = create(:invoice_item, item: @item_6, invoice: @invoice_6, quantity: 1, unit_price: 1, status: 0)
+      @invoice_item_1 = create(:invoice_item, item: @item_1, invoice: @invoice_1, quantity: 10, unit_price: 10, status: 1)
+      @invoice_item_2 = create(:invoice_item, item: @item_2, invoice: @invoice_2, quantity: 8, unit_price: 9, status: 1)
+      @invoice_item_5 = create(:invoice_item, item: @item_5, invoice: @invoice_5, quantity: 5, unit_price: 5, status: 1)
+      @invoice_item_4 = create(:invoice_item, item: @item_8, invoice: @invoice_4, quantity: 5, unit_price: 4, status: 1)
+      @invoice_item_3 = create(:invoice_item, item: @item_3, invoice: @invoice_3, quantity: 3, unit_price: 3, status: 0)
+      @invoice_item_6 = create(:invoice_item, item: @item_6, invoice: @invoice_6, quantity: 1, unit_price: 1, status: 0)
 
-        @transaction_1 = create(:transaction, invoice: @invoice_1, result: 0)
-        @transaction_2 = create(:transaction, invoice: @invoice_2, result: 0)
-        @transaction_3 = create(:transaction, invoice: @invoice_5, result: 0)
-        @transaction_4 = create(:transaction, invoice: @invoice_4, result: 0)
-        @transaction_5 = create(:transaction, invoice: @invoice_3, result: 0)
-        @transaction_6 = create(:transaction, invoice: @invoice_6, result: 0)
-      end
-      
-      it 'displays the top five items' do
-        expect(@merchant_1.top_five_items).to eq([@item_1, @item_2, @item_5, @item_8, @item_3])
-      end
+      @transaction_1 = create(:transaction, invoice: @invoice_1, result: 0)
+      @transaction_2 = create(:transaction, invoice: @invoice_2, result: 0)
+      @transaction_3 = create(:transaction, invoice: @invoice_5, result: 0)
+      @transaction_4 = create(:transaction, invoice: @invoice_4, result: 0)
+      @transaction_5 = create(:transaction, invoice: @invoice_3, result: 0)
+      @transaction_6 = create(:transaction, invoice: @invoice_6, result: 0)
     end
+    
+    it 'displays the top five items' do
+      expect(@merchant_1.top_five_items).to eq([@item_1, @item_2, @item_5, @item_8, @item_3])
+    end
+  end
 
-    describe '#ready_to_ship' do
-      it 'returns items that are ready to ship' do
-        expect(@merchant_1.ready_to_ship).to eq([@items_for_merchant_1.first, @items_for_merchant_1.second, @items_for_merchant_1.third, @items_for_merchant_1.fourth, @items_for_merchant_1.fifth])
-      end
+  describe '#ready_to_ship' do
+    it 'returns items that are ready to ship' do
+      expect(@merchant_1.ready_to_ship).to eq([@items_for_merchant_1.first, @items_for_merchant_1.second, @items_for_merchant_1.third, @items_for_merchant_1.fourth, @items_for_merchant_1.fifth])
     end
   end
 end
