@@ -32,9 +32,11 @@ class ItemsController < ApplicationController
     if params.has_key?(:status)
       @item.update(status: params[:status])
       redirect_to merchant_items_path(@item.merchant)
+      flash[:notice] = "Item status updated"
     else
       @item.update(item_params)
       redirect_to merchant_item_path(@item.merchant, @item)
+      flash[:notice] = "Item updated"
     end
   end
 

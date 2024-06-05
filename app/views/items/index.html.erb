@@ -28,6 +28,8 @@
     <% end %>
 </div>
 
+<%= flash[:notice] %>
+
 <div class="top-five-items">
   <h2> Top Five Items </h2>
     <% @top_five_items.each do |item| %>
