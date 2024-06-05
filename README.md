@@ -61,3 +61,7 @@ Austin Kenny
 
 [DTR](https://docs.google.com/document/d/1GXRbbZQJFcbzNzPkxaHsVN3MRXI9GxSJpSXeHT4cFN4/edit?usp=sharing)
 
+## what's next?
+
+- further styling
+- customer side
