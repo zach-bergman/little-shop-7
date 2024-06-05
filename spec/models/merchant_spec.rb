@@ -229,7 +229,7 @@ RSpec.describe Merchant, type: :model do
       expect(@merchant_1.top_five_items).to eq([@item_1, @item_2, @item_5, @item_8, @item_3])
     end
   end
-
+  
   describe '#ready_to_ship' do
     it 'returns items that are ready to ship' do
       expect(@merchant_1.ready_to_ship).to eq([@items_for_merchant_1.first, @items_for_merchant_1.second, @items_for_merchant_1.third, @items_for_merchant_1.fourth, @items_for_merchant_1.fifth])
