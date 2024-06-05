@@ -1,12 +1,14 @@
 <%= form_with url: merchant_item_path(@item.merchant, @item), method: :patch, local: true, data: {turbo:false} do |f| %>
   <%= f.label :name %>
-  <%= f.text_field :name %>
+  <%= f.text_field :name, value: @item.name %>
 
   <%= f.label :description %>
-  <%= f.text_area :description %>
+  <%= f.text_area :description, value: @item.description %>
 
   <%= f.label :unit_price %>
-  <%= f.text_field :unit_price %>
+  <%= f.text_field :unit_price, value: @item.unit_price %>
 
   <%= f.submit %>
 <% end %>
+
+<%= flash[:notice] %>

@@ -61,8 +61,8 @@ RSpec.describe 'invoice show' do
     it 'displays a select field to update the invoice status' do
       visit merchant_invoice_path(@merchant, @invoice_1)
       within('.invoice-status') do
-        expect(page).to have_content('Status: in progress')
-        expect(page).to have_button('Update Invoice Status')
+        expect(page).to have_content('Status: pending')
+        expect(page).to have_button('Update Item Status')
       end
     end
 
@@ -70,12 +70,12 @@ RSpec.describe 'invoice show' do
       visit merchant_invoice_path(@merchant, @invoice_1)
 
       within('.invoice-status') do
-        select 'completed', from: 'Status:'
-        click_button 'Update Invoice Status'
+        select 'packaged', from: 'Status:'
+        click_button 'Update Item Status'
 
         expect(current_path).to eq(merchant_invoice_path(@merchant, @invoice_1))
       end
-      expect(page).to have_content('Status: completed')
+      expect(page).to have_content('Status: packaged')
     end
   end
 end
