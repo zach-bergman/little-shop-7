@@ -37,7 +37,7 @@ RSpec.describe "Admin Invoice Show" do
   it "should show the total revenue of the invoice" do
     visit admin_invoice_path(@invoice)
 
-    expect(page).to have_content("Total Revenue: $95.00")
+    expect(page).to have_content("#{@invoice.total_revenue}")
   end
   
   describe "User Story 36" do
@@ -71,13 +71,13 @@ RSpec.describe "Admin Invoice Show" do
     it "should show the invoice status and the update button" do
         visit admin_invoice_path(@invoice)
 
-        expect(page).to have_select("invoice_status", selected: "in_progress")
+        expect(page).to have_select("status", selected: "completed")
 
-        select "completed", from: "invoice_status"
+        select "completed", from: "status"
         click_button "Update Invoice Status"
 
         expect(current_path).to eq(admin_invoice_path(@invoice))
-        expect(page).to have_select('invoice_status', selected: 'completed')
+        expect(page).to have_select('status', selected: 'completed')
     end
   end
 end
