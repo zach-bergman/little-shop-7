@@ -1,47 +1,60 @@
+<%= render "shared/admin_navbar" %>
+
 <div id="create_new_merchant">
   <%= link_to "Create New Merchant", new_admin_merchant_path %>
 </div>
 
-<div id="merchants_list">
-  <div id="enabled_merchants">
-    <h2> Enabled Merchants </h2>
-    <ul>
-      <% @enabled_merchants.each do |merchant| %>
-        <div id="merchant_<%= merchant.id %>">
-          <li>
-          <%= link_to merchant.name, admin_merchant_path(merchant.id) %>
-          <%= button_to "Disable", admin_merchant_path(merchant.id), params: { status: "disabled" },
-              method: :patch, data: { turbo: false } %>
-          </li>
-        </div>
-      <% end %>
-    </ul>
-  </div>
+<div class="row">
+  <div class="column">
+    <div id="merchants_list">
+      <div id="enabled_merchants">
+        <h2> Enabled Merchants </h2>
+        <ul>
+          <% @enabled_merchants.each do |merchant| %>
+            <div id="merchant_<%= merchant.id %>">
+              <li>
+              <%= link_to merchant.name, admin_merchant_path(merchant.id) %>
+              <%= button_to "Disable", admin_merchant_path(merchant.id), params: { status: "disabled" },
+                  method: :patch, data: { turbo: false } %>
+              </li>
+            </div>
+          <% end %>
+        </ul>
+      </div>
 
-  <div id="disabled_merchants">
-    <h2> Disabled Merchants </h2>
-    <ul>
-      <% @disabled_merchants.each do |merchant| %>
-        <div id="merchant_<%= merchant.id %>">
-          <li>
-          <%= link_to merchant.name, admin_merchant_path(merchant.id) %>
-          <%= button_to "Enable", admin_merchant_path(merchant.id), params: { status: "enabled" },
-              method: :patch, data: { turbo: false } %>
-          </li>
-        </div>
-      <% end %>
-    </ul>
-  </div>
+      <div id="disabled_merchants">
+        <h2> Disabled Merchants </h2>
+        <ul>
+          <% @disabled_merchants.each do |merchant| %>
+            <div id="merchant_<%= merchant.id %>">
+              <li>
+              <%= link_to merchant.name, admin_merchant_path(merchant.id) %>
+              <%= button_to "Enable", admin_merchant_path(merchant.id), params: { status: "enabled" },
+                  method: :patch, data: { turbo: false } %>
+              </li>
+            </div>
+          <% end %>
+        </ul>
+      </div>
 
-  <div id="top_five_merchants">
-    <h2> Top Merchants </h2>
-    <ol>
-        <% @top_five_merchants_by_rev.each do |merchant| %>
-          <li><%= link_to merchant.name, admin_merchant_path(merchant.id) %> - <%= number_to_currency(merchant.total_revenue) %> in sales </li>
-          <div id="top_day">
-            <p> Top day for <%= merchant.name %> was <%= merchant.top_selling_day.strftime("%m/%d/%y") %></p>
+      <div class="row-right">
+
+        <div class="column-right">
+
+          <div id="top_five_merchants">
+            <h2> Top Merchants </h2>
+            <ol>
+                <% @top_five_merchants_by_rev.each do |merchant| %>
+                  <li><%= link_to merchant.name, admin_merchant_path(merchant.id) %> - <%= number_to_currency(merchant.total_revenue) %> in sales </li>
+                  <div id="top_day">
+                    <p> Top day for <%= merchant.name %> was <%= merchant.top_selling_day.strftime("%m/%d/%y") %></p>
+                  </div>
+                <% end %>
+            </ol>
           </div>
-        <% end %>
-    </ol>
+    
+        </div>
+      </div>
+    </div>
   </div>
 </div>

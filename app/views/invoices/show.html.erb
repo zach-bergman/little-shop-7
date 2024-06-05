@@ -1,15 +1,22 @@
-<h1><%= "#{@invoice.id}" %></h1>
+<%= render "shared/merchant_navbar"%>
+
+<div class="invoice-id"
+  <h1>Invoice <%= "#{@invoice.id}" %></h1>
+</div>
 
 <div class="invoice-info">
 <%= "Status: #{@invoice.status}" %>
 <br>
-<%= "Created at: #{@invoice.format_date}" %>
+<%= "Created on: #{@invoice.format_date}" %>
 <br>
+<div class="total-revenue">
+  <%= "Total Revenue: #{@invoice.total_revenue}" %>
+</div>
 <%= "Customer: #{@invoice.customer.first_name} #{@invoice.customer.last_name}" %>
 </div>
 
 <div class="invoice-items">
-  <h2> Items in this Invoice </h2>
+  <h2> Items on this Invoice </h2>
     <% @invoice.invoice_items.each do |invoice_item| %>
       <ul>
       <li><%= "#{invoice_item.item.name} - Quantity: #{invoice_item.quantity} - Price: #{number_to_currency(invoice_item.price)} - Total: #{number_to_currency(invoice_item.total_cost)} Status: #{invoice_item.status}" %></li>
@@ -25,6 +32,3 @@
     <% end %>
 </div>
 
-<div class="total-revenue">
-  <%= "Total Revenue: #{@invoice.total_revenue}" %>
-</div>
