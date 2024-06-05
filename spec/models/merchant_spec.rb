@@ -184,8 +184,7 @@ RSpec.describe Merchant, type: :model do
         expect(top_five.fifth.total_revenue).to eq(3000000)
       end
     end
-  end
-  
+
     describe 'top five items' do
       before do
         @merchant_1 = create(:merchant)

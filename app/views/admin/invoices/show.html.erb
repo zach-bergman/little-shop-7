@@ -1,17 +1,13 @@
 <div id="invoice-info">
   <h1>Invoice #<%= @invoice.id %></h1>
 
-
   <%= form_with url: admin_invoice_path(@invoice), method: :patch, data: { turbo: false } do |f| %>
     <%= f.label :status, "Status:" %>
     <%= f.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
     <%= f.submit "Update Invoice Status" %>
   <% end %>
-<div id="invoice-info">
-<p>Status: <%= @invoice.status %></p>
-<p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
-<p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
 
+  <p>Status: <%= @invoice.status %></p>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
   <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
 </div>

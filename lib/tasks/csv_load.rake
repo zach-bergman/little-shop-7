@@ -75,5 +75,5 @@ namespace :csv_load do
   end
 
   desc "Load All Data"
-  task all: [:invoice_items, :items, :transactions, :invoices, :merchants, :customers]
+  task all: [:customers, :merchants, :invoices, :transactions, :items, :invoice_items]
 end
