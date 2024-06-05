@@ -22,11 +22,12 @@
       <li><%= "#{invoice_item.item.name} - Quantity: #{invoice_item.quantity} - Price: #{number_to_currency(invoice_item.price)} - Total: #{number_to_currency(invoice_item.total_cost)} Status: #{invoice_item.status}" %></li>
       </ul>
       <div class="invoice-status">
-        <%= form_with url: merchant_invoice_path(@merchant, @invoice), method: :patch, data: { turbo: false } do |f| %>
+        <%= form_with url: merchant_invoice_item_path(@merchant, invoice_item), method: :patch, data: { turbo: false } do |f| %>
             <%= f.label :status, "Status:" %>
-            <%= f.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
-            <%= f.submit "Update Invoice Status" %>
+            <%= f.select :status, ["pending", "packaged", "shipped"], selected: invoice_item.status %>
+            <%= f.submit "Update Item Status" %>
         <% end %>
+        <%= flash[:notice] %>
       </div>
     <% end %>
 </div>

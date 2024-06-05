@@ -16,5 +16,6 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index]
     resources :items
     resources :invoices, only: %i[index show update edit]
+    resources :invoice_items, only: [:update]
   end
 end
