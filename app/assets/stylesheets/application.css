@@ -41,7 +41,7 @@
 }
 
 .nav li a {
-  color: whitesmoke;
+  color: black;
   display: block;
   text-align: center;
   padding: 5px 10px;
@@ -89,17 +89,9 @@
   display: flex;
   float: right;
   padding-bottom: 100px;
-
-
 }
 
 .column-right {
   flex: 50%;
   float: right;
 }
-
-.active {
-  background-color: #4CAF50;
-  
-  color: white;
-  }
