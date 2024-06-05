@@ -52,8 +52,7 @@ RSpec.describe 'invoice show' do
 
     it 'displays the total revenue for the invoice' do
       visit merchant_invoice_path(@merchant, @invoice_1)
-
-      save_and_open_page
+      
       within('.total-revenue') do
         expect(page).to have_content('Total Revenue: $100')
       end
@@ -65,6 +64,18 @@ RSpec.describe 'invoice show' do
         expect(page).to have_content('Status: in progress')
         expect(page).to have_button('Update Invoice Status')
       end
+    end
+
+    it 'can update the invoice status' do
+      visit merchant_invoice_path(@merchant, @invoice_1)
+
+      within('.invoice-status') do
+        select 'completed', from: 'Status:'
+        click_button 'Update Invoice Status'
+
+        expect(current_path).to eq(merchant_invoice_path(@merchant, @invoice_1))
+      end
+      expect(page).to have_content('Status: completed')
     end
   end
 end

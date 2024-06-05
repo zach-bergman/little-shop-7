@@ -220,7 +220,7 @@ RSpec.describe "Admin Merchants Index" do
       ######
 
       visit admin_merchants_path
-      save_and_open_page
+      
 
       all("div#top_day") [0] do
         expect(page).to have_content("Top day for #{merchant_1.name} was 08/29/1994", normalize_ws: true)
