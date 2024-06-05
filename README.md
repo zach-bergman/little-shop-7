@@ -65,3 +65,4 @@ Austin Kenny
 
 - further styling
 - customer side
+- pictures for items
