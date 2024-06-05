@@ -13,3 +13,93 @@
  *= require_tree .
  *= require_self
  */
+
+.header {
+  background-color: rgb(173, 173, 173);
+  padding: 10px;
+  width: view;
+  margin: 0;
+  text-align: center;
+}
+
+.nav {
+  padding-top: 10px;
+}
+
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  justify-content: right;
+  top: 10px;
+}
+
+.nav li {
+  display: inline-block;
+  margin-left: 35px;
+
+}
+
+.nav li a {
+  color: whitesmoke;
+  display: block;
+  text-align: center;
+  padding: 5px 10px;
+  text-decoration: none;
+  float: right;
+}
+
+.nav li a:hover {
+  color: goldenrod;
+}
+
+.nav-items-right {
+  float: right;
+  padding: 5px 10px;
+}
+
+.nav-item-left {
+  float: left;
+  padding: 11px 10px;
+  font-size: large
+}
+
+.column-left {
+  padding-top: 40px;
+
+  float: left;
+  width: 50%;
+}
+
+.invoice-id {
+  text-align: center;
+  padding-top: 60px;
+  font-size: large
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.row-right {
+  display: flex;
+  float: right;
+  padding-bottom: 100px;
+
+
+}
+
+.column-right {
+  flex: 50%;
+  float: right;
+}
+
+.active {
+  background-color: #4CAF50;
+  
+  color: white;
+  }

@@ -26,9 +26,9 @@ RSpec.describe 'Invoices Index' do
       visit merchant_invoices_path(@merchant_1)
 
       within('.invoices-list') do
-        expect(page).to have_link("#{@invoice_1.id}")
-        expect(page).to have_link("#{@invoice_2.id}")
-        expect(page).to_not have_link("#{@invoice_3.id}")
+        expect(page).to have_link("Invoice #{@invoice_1.id}")
+        expect(page).to have_link("Invoice #{@invoice_2.id}")
+        expect(page).to_not have_link("Invoice #{@invoice_3.id}")
       end
     end
   end

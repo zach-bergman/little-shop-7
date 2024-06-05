@@ -1,9 +1,13 @@
-<h1>Invoices</h1>
+<%= render "shared/admin_navbar" %>
+
+<div class="invoice-id">
+  <h1>Invoices</h1>
+</div>
 
 <div id="invoices-list">
-  <% @invoices.each do |invoice| %>
-    <p>
-      <%= link_to invoice.id, admin_invoice_path(invoice) %>
-    </p>
-  <% end %>
+    <% @invoices.each do |invoice| %>
+      <p>
+        <%= link_to "Invoice ##{invoice.id}", admin_invoice_path(invoice) %>
+      </p>
+    <% end %>
 </div>

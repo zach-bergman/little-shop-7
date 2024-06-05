@@ -61,29 +61,23 @@ RSpec.describe "Admin Dashboard Index", type: :feature do
 
   describe "As an admin, when I visit the admin dashboard" do
     it "shows a header - Admin Dashboard" do
-      within("div#header") do
-        expect(page).to have_content("Admin Dashboard")
-      end
+      expect(page).to have_content("Admin Dashboard")
     end
 
     it "shows a link to the admin merchants index" do
-      within("div#links") do
         expect(page).to have_link("Merchants")
 
         click_link("Merchants")
 
         expect(current_path).to eq admin_merchants_path
-      end
     end
     
     it "shows a link to the admin invoices index" do
-      within("div#links") do
         expect(page).to have_link("Invoices")
       
         click_link("Invoices")
       
         expect(current_path).to eq admin_invoices_path
-      end
     end
 
     describe "User Story 21 - Top Customers" do
