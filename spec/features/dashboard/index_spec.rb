@@ -114,4 +114,18 @@ RSpec.describe 'Dashboard' do
       end
     end
   end
+
+  describe "User Story 1 - Bulk Discounts" do
+    describe "As a merchant, when I visit my merchant dashboard" do
+      it "shows a link to view all my bulk discounts - directs to the bulk discounts index page" do
+        visit merchant_dashboard_index_path(@merchant_1.id)
+
+        expect(page).to have_link("My Bulk Discounts")
+
+        click_link("My Bulk Discounts")
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+      end
+    end
+  end
 end
