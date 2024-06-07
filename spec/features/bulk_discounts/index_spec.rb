@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Merchant Bulk Discounts Index Page" do
-  describe "User Story 1 - Bulk Discounts" do
+  describe "User Story 1 - Merchant Bulk Discounts Index" do
     describe "As a merchant, when I visit my merchant bulk discounts index page" do
       it "shows a list of all bulk discounts including the name, percentage, and quantity threshold,
       and each name is a link to that bulk discount's show page" do
@@ -27,6 +27,32 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
         expect(page).to_not have_content(bulk_discount_3.name)
         expect(page).to_not have_content(bulk_discount_3.percentage)
         expect(page).to_not have_content(bulk_discount_3.quantity_threshold)
+      end
+    end
+  end
+
+  describe "User Story 2 - Merchant Bulk Discount Create" do
+    describe "As a merchant, when I visit my merchant bulk discounts index page" do
+      it "shows a link to create a new bulk discount" do
+        merchant_1 = create(:merchant)
+
+        visit merchant_bulk_discounts_path(merchant_1.id)
+
+        within("div.new_bulk_discount_link") do
+          expect(page).to have_link("Create New Bulk Discount")
+        end
+      end
+
+      it "directs to New Bulk Discount page when link is clicked" do
+        merchant_1 = create(:merchant)
+
+        visit merchant_bulk_discounts_path(merchant_1.id)
+
+        within("div.new_bulk_discount_link") do
+          click_link("Create New Bulk Discount")
+
+          expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1.id))
+        end
       end
     end
   end

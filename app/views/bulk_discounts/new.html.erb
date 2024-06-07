@@ -1,0 +1,21 @@
+<%= render "shared/merchant_navbar" %>
+
+<div class="row>
+  <div class="column">
+
+    <div class="new_form">
+      <%= form_with url: merchant_bulk_discounts_path(@merchant.id), data: { turbo: false } do |f| %>
+        <%= f.label :name, "Name:" %>
+        <%= f.text_field :name %>
+
+        <%= f.label :percentage, "Percentage Discount:" %>
+        <%= f.number_field :percentage %>
+
+        <%= f.label :quantity_threshold, "Quantity Threshold:" %>
+        <%= f.number_field :quantity_threshold %>
+
+        <%= f.submit "Submit" %>
+      <% end %>
+    </div>
+  </div>
+</div>
