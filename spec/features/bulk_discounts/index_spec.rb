@@ -52,6 +52,7 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
           click_link("Create New Bulk Discount")
 
           expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1.id))
+        end
       end
     end
   end
