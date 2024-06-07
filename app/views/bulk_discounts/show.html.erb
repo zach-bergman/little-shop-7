@@ -1,5 +1,13 @@
 <%= render "shared/merchant_navbar" %>
 
-<div class="invoice-id">
-  <%= @bulk_discount.name %>
+
+<div class="bulk_discount_info">
+  <div class="invoice-id">
+    <h2>Bulk Discount Name: <%= @bulk_discount.name %></h2>
+  </div>
+
+  <ul>
+    <li>Percentage Discount: <%= @bulk_discount.percentage %>%</li>
+    <li>Quantity Threshold: <%= @bulk_discount.quantity_threshold %></li>
+  </ul>
 </div>
