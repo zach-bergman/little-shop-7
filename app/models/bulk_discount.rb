@@ -1,5 +1,5 @@
 #change name of table to bulk_discounts?
-class Discount < ApplicationRecord
+class BulkDiscount < ApplicationRecord
   belongs_to :merchant
 
   validates :name, presence: true
