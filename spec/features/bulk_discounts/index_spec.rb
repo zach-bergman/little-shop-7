@@ -56,4 +56,54 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
       end
     end
   end
+
+  describe "User Story 3 - Merchant Bulk Discount Delete" do
+    describe "As a merchant, when I visit my merchant bulk discounts index page" do
+      it "shows a delete button next to each bulk discount" do
+        merchant_1 = create(:merchant)
+        bulk_discount_1 = BulkDiscount.create!(name: "10%-5", percentage: 10, quantity_threshold: 5, merchant_id: merchant_1.id)
+
+
+        visit merchant_bulk_discounts_path(merchant_1.id)
+
+        within("div.bulk_discounts_list") do
+          expect(page).to have_button("Delete #{bulk_discount_1.name}")
+        end
+      end
+
+      it "redirects back to the bulk discounts index page" do
+        merchant_1 = create(:merchant)
+        bulk_discount_1 = BulkDiscount.create!(name: "10%-5", percentage: 10, quantity_threshold: 5, merchant_id: merchant_1.id)
+
+
+        visit merchant_bulk_discounts_path(merchant_1.id)
+
+        within("div.bulk_discounts_list") do
+          click_button("Delete #{bulk_discount_1.name}")
+        end
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(merchant_1.id))
+      end
+
+      it "does not show the deleted bulk discount on index page anymore" do
+        merchant_1 = create(:merchant)
+        bulk_discount_1 = BulkDiscount.create!(name: "10%-5", percentage: 10, quantity_threshold: 5, merchant_id: merchant_1.id)
+
+
+        visit merchant_bulk_discounts_path(merchant_1.id)
+
+        within("div.bulk_discounts_list") do
+          click_button("Delete #{bulk_discount_1.name}")
+        end
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(merchant_1.id))
+
+        expect(page).to_not have_content(bulk_discount_1.name)
+        expect(page).to_not have_content(bulk_discount_1.percentage)
+        expect(page).to_not have_content(bulk_discount_1.quantity_threshold)
+
+        expect(page).to have_content("Bulk discount was successfully deleted.")
+      end
+    end
+  end
 end
