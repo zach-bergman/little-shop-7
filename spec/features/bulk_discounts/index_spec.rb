@@ -101,6 +101,8 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
         expect(page).to_not have_content(bulk_discount_1.name)
         expect(page).to_not have_content(bulk_discount_1.percentage)
         expect(page).to_not have_content(bulk_discount_1.quantity_threshold)
+
+        expect(page).to have_content("Bulk discount was successfully deleted.")
       end
     end
   end
