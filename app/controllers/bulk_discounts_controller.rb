@@ -24,9 +24,18 @@ class BulkDiscountsController < ApplicationController
       redirect_to merchant_bulk_discounts_path(@merchant.id)
     else 
       flash[:alert] = "Error: #{bulk_discount.errors.full_messages.to_sentence}"
-      
+
       redirect_to new_merchant_bulk_discount_path(@merchant.id)
     end
+  end
+
+  def destroy
+    merchant = Merchant.find(params[:merchant_id])
+    bulk_discount = merchant.bulk_discounts.find(params[:id])
+    
+    bulk_discount.destroy
+
+    redirect_to merchant_bulk_discounts_path(merchant.id), notice: "Bulk discount was successfully deleted."
   end
 
   private
