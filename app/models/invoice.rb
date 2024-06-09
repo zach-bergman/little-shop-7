@@ -6,6 +6,7 @@ class Invoice < ApplicationRecord
   has_many :invoice_items
   has_many :items, through: :invoice_items
   has_many :merchants, through: :items
+  # belongs_to :bulk_discount, optional: true
 
   enum :status, ['in progress', 'completed', 'cancelled']
 

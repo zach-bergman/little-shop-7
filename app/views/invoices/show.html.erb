@@ -1,4 +1,4 @@
-<%= render "shared/merchant_navbar"%>
+<%= render "shared/merchant_navbar" %>
 
 <div class="invoice-id"
   <h1>Invoice <%= "#{@invoice.id}" %></h1>
@@ -6,7 +6,7 @@
 
 <div class="revenues">
   <p>Total Revenue: <%= number_to_currency(@total_revenue / 100.0) %></p>
-  <p>Total Discounted Revenue: <%= number_to_currency(@total_discounted_revenue / 100.0) %></p>
+  <p> Total Discounted Revenue: <%= number_to_currency(@total_discounted_revenue / 100.0) %></p>
 </div>
 
 <div class="invoice-info">
@@ -25,7 +25,17 @@
     <% @invoice.invoice_items.each do |invoice_item| %>
       <ul>
       <li><%= "#{invoice_item.item.name} - Quantity: #{invoice_item.quantity} - Price: #{number_to_currency(invoice_item.price)} - Total: #{number_to_currency(invoice_item.total_cost)} Status: #{invoice_item.status}" %></li>
-      </ul>
+
+      <% invoice_item.bulk_discounts.each do |bulk_discount| %>
+        <% if bulk_discount.nil? %>
+          <li> No Bulk Discount Found </li>
+        <% else %>
+        <li><%= link_to "#{bulk_discount.name}", merchant_bulk_discount_path(@merchant.id, bulk_discount.id) %></li>
+        <% end %>
+      <% end%>
+
+
+
       <div class="invoice-status">
         <%= form_with url: merchant_invoice_item_path(@merchant, invoice_item), method: :patch, data: { turbo: false } do |f| %>
             <%= f.label :status, "Status:" %>
@@ -36,4 +46,3 @@
       </div>
     <% end %>
 </div>
-
