@@ -116,4 +116,26 @@ RSpec.describe 'invoice show' do
       end
     end
   end
+
+  describe "User Story 7 - Merchant Invoice Show Page: Link to applied discounts" do
+    describe "As a merchant, when I visit my merchant invoice show page" do
+      it "shows a link to the show page for the bulk discount that was applied next to each invoice item" do
+        merchant = create(:merchant, status: "enabled")
+        bulk_discount = BulkDiscount.create!(name: "Bulk Discount 1", percentage: 20, quantity_threshold: 2, merchant_id: merchant.id)
+
+        customer = create(:customer)
+        invoice = create(:invoice, customer: customer)
+        item_1 = create(:item, merchant: merchant, unit_price: 100)
+        item_2 = create(:item, merchant: merchant, unit_price: 200)
+        invoice_item_1 = create(:invoice_item, invoice: invoice, item: item_1, quantity: 2, unit_price: item_1.unit_price)
+        invoice_item_2 = create(:invoice_item, invoice: invoice, item: item_2, quantity: 1, unit_price: item_2.unit_price)
+
+        visit merchant_invoice_path(merchant, invoice)
+
+        within(".invoice-items") do
+          expect(page).to have_link("Bulk Discount 1", href: merchant_bulk_discount_path(merchant.id, bulk_discount.id))
+        end
+      end
+    end
+  end
 end
