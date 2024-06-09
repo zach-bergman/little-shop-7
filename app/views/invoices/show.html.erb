@@ -4,6 +4,11 @@
   <h1>Invoice <%= "#{@invoice.id}" %></h1>
 </div>
 
+<div class="revenues">
+  <p>Total Revenue: <%= number_to_currency(@total_revenue / 100.0) %></p>
+  <p>Total Discounted Revenue: <%= number_to_currency(@total_discounted_revenue / 100.0) %></p>
+</div>
+
 <div class="invoice-info">
 <%= "Status: #{@invoice.status}" %>
 <br>
