@@ -78,4 +78,42 @@ RSpec.describe 'invoice show' do
       expect(page).to have_content('Status: packaged')
     end
   end
+
+  describe "User Story 6 - Merchant Invoice Show Page: Total Revenue and Discounted Revenue" do
+    describe "As a merchant, when I visit my merchant invoice show page" do
+      it "shows the total revenue for my merchant from this invoice" do
+        merchant = create(:merchant, status: "enabled")
+        customer = create(:customer)
+        invoice = create(:invoice, customer: customer)
+        item_1 = create(:item, merchant: merchant, unit_price: 100)
+        item_2 = create(:item, merchant: merchant, unit_price: 200)
+        invoice_item_1 = create(:invoice_item, invoice: invoice, item: item_1, quantity: 2, unit_price: item_1.unit_price)
+        invoice_item_2 = create(:invoice_item, invoice: invoice, item: item_2, quantity: 1, unit_price: item_2.unit_price)
+
+        visit merchant_invoice_path(merchant, invoice)
+
+        within(".revenues") do
+          expect(page).to have_content("Total Revenue: $4.00")
+        end
+      end
+
+      it "shows the total discounted revenue for my merchant from this invoice which includes bulk discounts" do
+        merchant = create(:merchant, status: "enabled")
+        bulk_discount = BulkDiscount.create!(name: "Bulk Discount 1", percentage: 20, quantity_threshold: 2, merchant_id: merchant.id)
+
+        customer = create(:customer)
+        invoice = create(:invoice, customer: customer)
+        item_1 = create(:item, merchant: merchant, unit_price: 100)
+        item_2 = create(:item, merchant: merchant, unit_price: 200)
+        invoice_item_1 = create(:invoice_item, invoice: invoice, item: item_1, quantity: 2, unit_price: item_1.unit_price)
+        invoice_item_2 = create(:invoice_item, invoice: invoice, item: item_2, quantity: 1, unit_price: item_2.unit_price)
+
+        visit merchant_invoice_path(merchant, invoice)
+
+        within(".revenues") do
+          expect(page).to have_content("Total Discounted Revenue: $3.60")
+        end
+      end
+    end
+  end
 end
