@@ -5,8 +5,8 @@
 </div>
 
 <div class="revenues">
-  <p>Total Revenue: <%= number_to_currency(@total_revenue / 100.0) %></p>
-  <p> Total Discounted Revenue: <%= number_to_currency(@total_discounted_revenue / 100.0) %></p>
+  <p>Total Revenue: <%= @invoice.total_revenue %></p>
+  <p> Total Discounted Revenue: <%= number_to_currency(@total_discounted_revenue_for_merchant / 100.0) %></p>
 </div>
 
 <div class="invoice-info">
