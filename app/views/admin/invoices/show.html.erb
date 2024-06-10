@@ -5,6 +5,12 @@
     <h1>Invoice #<%= @invoice.id %></h1>
   </div>
 
+  <div class="revenues">
+    <h4>Revenue Expected Before and After Bulk Discounts</h4>
+    <p>Total Revenue: <%= @total_revenue %></p>
+    <p> Total Discounted Revenue: <%= number_to_currency(@invoice.total_discounted_revenue_for_invoice / 100.0) %></p>
+  </div>
+
   <div class="row">
     <div class="column">
       <%= form_with url: admin_invoice_path(@invoice), method: :patch, data: { turbo: false } do |f| %>

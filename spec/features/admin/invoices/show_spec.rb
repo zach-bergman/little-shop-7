@@ -80,4 +80,43 @@ RSpec.describe "Admin Invoice Show" do
         expect(page).to have_select('status', selected: 'completed')
     end
   end
+
+  describe "Bulk Discounts - User Story 8 - Admin Invoice Show Page: Total Revenue and Discounted Revenue" do
+    describe "As an admin, when I visit an admin invoice show page" do
+      it "shows the total revenue from the invoice - not including discounts" do
+        merchant = create(:merchant, status: "enabled")
+        bulk_discount = BulkDiscount.create!(name: "Bulk Discount A", percentage: 20, quantity_threshold: 2, merchant_id: merchant.id)
+        customer = create(:customer)
+        invoice = create(:invoice, customer: customer)
+        item_1 = create(:item, merchant: merchant, unit_price: 100)
+        item_2 = create(:item, merchant: merchant, unit_price: 200)
+        invoice_item_1 = create(:invoice_item, invoice: invoice, item: item_1, quantity: 2, unit_price: item_1.unit_price)
+        invoice_item_2 = create(:invoice_item, invoice: invoice, item: item_2, quantity: 1, unit_price: item_2.unit_price)
+
+        visit admin_invoice_path(invoice)
+
+        within(".revenues") do
+          expect(page).to have_content("Revenue Expected Before and After Bulk Discounts")
+          expect(page).to have_content("Total Revenue: $4.00")
+        end
+      end
+
+      it "shows the total discounted revenue from the invoice - including the bulk discounts" do
+        merchant = create(:merchant, status: "enabled")
+        bulk_discount = BulkDiscount.create!(name: "Bulk Discount A", percentage: 20, quantity_threshold: 2, merchant_id: merchant.id)
+        customer = create(:customer)
+        invoice = create(:invoice, customer: customer)
+        item_1 = create(:item, merchant: merchant, unit_price: 100)
+        item_2 = create(:item, merchant: merchant, unit_price: 200)
+        invoice_item_1 = create(:invoice_item, invoice: invoice, item: item_1, quantity: 2, unit_price: item_1.unit_price)
+        invoice_item_2 = create(:invoice_item, invoice: invoice, item: item_2, quantity: 1, unit_price: item_2.unit_price)
+
+        visit admin_invoice_path(invoice)
+
+        within(".revenues") do
+          expect(page).to have_content("Total Discounted Revenue: $3.60")
+        end
+      end
+    end
+  end
 end
