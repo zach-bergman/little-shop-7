@@ -6,7 +6,9 @@ class Invoice < ApplicationRecord
   has_many :invoice_items
   has_many :items, through: :invoice_items
   has_many :merchants, through: :items
-  # belongs_to :bulk_discount, optional: true
+
+  validates :status, presence: true
+  validates :customer_id, presence: true
 
   enum :status, ['in progress', 'completed', 'cancelled']
 
@@ -22,23 +24,19 @@ class Invoice < ApplicationRecord
   end
 
   def total_revenue
-    total = invoice_items.sum('unit_price * quantity')
-    number_to_currency(total / 100.0)
+    invoice_items.sum('unit_price * quantity')
   end
 
-  def total_revenue_for_invoice(merchant)
-    merchant.invoice_items
-          .joins(:item)
-          .where(items: { merchant_id: merchant.id })
-          .sum("invoice_items.quantity * invoice_items.unit_price")
+  def total_discount_for_invoice
+    invoice_items
+      .joins(item: {merchant: :bulk_discounts})
+      .wherqe("invoice_items.quantity >= bulk_discounts.quantity_threshold")
+      .select("invoice_items.*, max(bulk_discounts.percentage / 100.0 * invoice_items.unit_price * invoice_items.quantity) as discount")
+      .group("invoice_items.id")
+      .sum {|invoice_item| invoice_item.discount}
   end
 
   def total_discounted_revenue_for_invoice
-      invoice_items
-        .joins(item: :merchant)
-        .joins("LEFT JOIN bulk_discounts ON bulk_discounts.merchant_id = items.merchant_id AND invoice_items.quantity >= bulk_discounts.quantity_threshold")
-        .select('invoice_items.id, invoice_items.quantity, invoice_items.unit_price, COALESCE(MAX(bulk_discounts.percentage), 0) AS discount')
-        .group('invoice_items.id')
-        .sum { |ii| ii.unit_price * ii.quantity * (1 - ii.discount / 100.0) }
+    total_revenue - total_discount_for_invoice
   end
 end
