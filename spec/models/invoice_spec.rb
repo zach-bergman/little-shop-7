@@ -267,7 +267,7 @@ RSpec.describe Invoice, type: :model do
         expect(invoice_A.total_discounted_revenue_for_invoice).to eq(223.5)
         # Item A1 meets the quantity threshold for Bulk Discount A: 12 x 10 = 120, 120 - 20% = 96
         # Item A2 meets the quantity threshold for Bulk Discount B: 15 x 5 = 75, 75 - 30% = 52.5
-        # 96 + 52.5 + 75(cost of invoice_item_B without discount) = 148.5
+        # 96 + 52.5 + 75(cost of invoice_item_B without discount) = 223.5
       end
     end
   end
