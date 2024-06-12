@@ -14,7 +14,7 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
 
         visit merchant_bulk_discounts_path(merchant_1.id)
 
-        within("div.bulk_discounts_list") do
+        within("div.bulk-discounts-list") do
           expect(page).to have_link(bulk_discount_1.name, href: merchant_bulk_discount_path(merchant_1.id, bulk_discount_1.id))
           expect(page).to have_content("Percentage Discount: #{bulk_discount_1.percentage}%")
           expect(page).to have_content("Quantity Threshold: #{bulk_discount_1.quantity_threshold}")
@@ -33,26 +33,17 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
 
   describe "User Story 2 - Merchant Bulk Discount Create" do
     describe "As a merchant, when I visit my merchant bulk discounts index page" do
-      it "shows a link to create a new bulk discount" do
+      it "shows a link to create a new bulk discount that links to New Bulk Discount page" do
         merchant_1 = create(:merchant)
 
         visit merchant_bulk_discounts_path(merchant_1.id)
 
-        within("div.new_bulk_discount_link") do
+        within("div.new-bulk-discount-link") do
           expect(page).to have_link("Create New Bulk Discount")
-        end
-      end
-
-      it "directs to New Bulk Discount page when link is clicked" do
-        merchant_1 = create(:merchant)
-
-        visit merchant_bulk_discounts_path(merchant_1.id)
-
-        within("div.new_bulk_discount_link") do
           click_link("Create New Bulk Discount")
-
-          expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1.id))
         end
+
+        expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1.id))
       end
     end
   end
@@ -66,7 +57,7 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
 
         visit merchant_bulk_discounts_path(merchant_1.id)
 
-        within("div.bulk_discounts_list") do
+        within("div.bulk-discounts-list") do
           expect(page).to have_button("Delete #{bulk_discount_1.name}")
         end
       end
@@ -78,7 +69,7 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
 
         visit merchant_bulk_discounts_path(merchant_1.id)
 
-        within("div.bulk_discounts_list") do
+        within("div.bulk-discounts-list") do
           click_button("Delete #{bulk_discount_1.name}")
         end
 
@@ -92,7 +83,7 @@ RSpec.describe "Merchant Bulk Discounts Index Page" do
 
         visit merchant_bulk_discounts_path(merchant_1.id)
 
-        within("div.bulk_discounts_list") do
+        within("div.bulk-discounts-list") do
           click_button("Delete #{bulk_discount_1.name}")
         end
 

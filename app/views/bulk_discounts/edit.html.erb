@@ -1,16 +1,29 @@
 <%= render "shared/merchant_navbar" %>
 
-<div class="bulk_discount_edit_form">
-  <%= form_with url: merchant_bulk_discount_path(@merchant.id, @bulk_discount.id), method: :patch, data: { turbo: false }, local: true do |f| %>
-    <%= f.label :name, "Bulk Discount Name:"  %>
-    <%= f.text_field :name, value: @bulk_discount.name %>
+<div class="container">
+  <div class="form-container">
+    <h2>Edit Bulk Discount</h2>
+    <div class="bulk-discount-edit-form">
+      <%= form_with url: merchant_bulk_discount_path(@merchant.id, @bulk_discount.id), method: :patch, data: { turbo: false }, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :name, "Bulk Discount Name:" %>
+          <%= f.text_field :name, value: @bulk_discount.name, class: "form-control" %>
+        </div>
 
-    <%= f.label :percentage, "Percentage Discount:" %>
-    <%= f.number_field :percentage, value: @bulk_discount.percentage %>
+        <div class="form-group">
+          <%= f.label :percentage, "Percentage Discount:" %>
+          <%= f.number_field :percentage, value: @bulk_discount.percentage, class: "form-control" %>
+        </div>
 
-    <%= f.label :quantity_threshold, "Quantity Threshold:" %>
-    <%= f.number_field :quantity_threshold, value: @bulk_discount.quantity_threshold %>
+        <div class="form-group">
+          <%= f.label :quantity_threshold, "Quantity Threshold:" %>
+          <%= f.number_field :quantity_threshold, value: @bulk_discount.quantity_threshold, class: "form-control" %>
+        </div>
 
-    <%= f.submit "Submit" %>
-  <% end %>
+        <div class="form-group">
+          <%= f.submit "Submit", class: "btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

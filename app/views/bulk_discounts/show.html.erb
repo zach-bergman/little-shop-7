@@ -1,17 +1,16 @@
 <%= render "shared/merchant_navbar" %>
 
-
-<div class="bulk_discount_info">
-  <div class="invoice-id">
+<div class="container">
+  <div class="bulk-discount-info">
     <h2>Bulk Discount Name: <%= @bulk_discount.name %></h2>
+
+    <ul>
+      <li><strong>Percentage Discount:</strong> <%= @bulk_discount.percentage %>%</li>
+      <li><strong>Quantity Threshold:</strong> <%= @bulk_discount.quantity_threshold %></li>
+    </ul>
   </div>
 
-  <ul>
-    <li>Percentage Discount: <%= @bulk_discount.percentage %>%</li>
-    <li>Quantity Threshold: <%= @bulk_discount.quantity_threshold %></li>
-  </ul>
-</div>
-
-<div class="bulk_discount_edit_link">
-  <%= link_to "Edit #{@bulk_discount.name}", edit_merchant_bulk_discount_path(@merchant.id, @bulk_discount.id) %>
+  <div class="bulk-discount-edit-link">
+    <%= link_to "Edit #{@bulk_discount.name}", edit_merchant_bulk_discount_path(@merchant.id, @bulk_discount.id), class: "btn" %>
+  </div>
 </div>
