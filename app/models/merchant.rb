@@ -7,6 +7,7 @@ class Merchant < ApplicationRecord
   has_many :bulk_discounts
 
   validates :name, presence: true
+  validates :status, presence: true
 
   enum :status, %i[disabled enabled], validate: true
 

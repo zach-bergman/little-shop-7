@@ -53,7 +53,7 @@ RSpec.describe 'invoice show' do
     it 'displays the total revenue for the invoice' do
       visit merchant_invoice_path(@merchant, @invoice_1)
       
-      within('.total-revenue') do
+      within('.revenues') do
         expect(page).to have_content('Total Revenue: $100')
       end
     end
@@ -122,6 +122,7 @@ RSpec.describe 'invoice show' do
       it "shows a link to the show page for the bulk discount that was applied next to each invoice item" do
         merchant = create(:merchant, status: "enabled")
         bulk_discount = BulkDiscount.create!(name: "Bulk Discount 1", percentage: 20, quantity_threshold: 2, merchant_id: merchant.id)
+        bulk_discount_2 = BulkDiscount.create!(name: "Bulk Discount 2", percentage: 30, quantity_threshold: 5, merchant_id: merchant.id)
 
         customer = create(:customer)
         invoice = create(:invoice, customer: customer)
@@ -132,8 +133,9 @@ RSpec.describe 'invoice show' do
 
         visit merchant_invoice_path(merchant, invoice)
 
-        within(".invoice-items") do
-          expect(page).to have_link("Bulk Discount 1", href: merchant_bulk_discount_path(merchant.id, bulk_discount.id))
+        within(".discount-info-#{invoice_item_1.id}") do
+          expect(page).to have_link("#{bulk_discount.percentage}% Discount Applied", href: merchant_bulk_discount_path(merchant.id, bulk_discount.id))
+          expect(page).to_not have_link("#{bulk_discount_2.percentage}% Discount Applied", href: merchant_bulk_discount_path(merchant.id, bulk_discount_2.id))
         end
       end
     end
