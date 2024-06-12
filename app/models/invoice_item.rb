@@ -8,6 +8,9 @@ class InvoiceItem < ApplicationRecord
 
   validates :quantity, presence: true
   validates :unit_price, presence: true
+  validates :invoice_id, presence: true
+  validates :item_id, presence: true
+  validates :status, presence: true
 
   def price
     unit_price / 100
@@ -15,5 +18,12 @@ class InvoiceItem < ApplicationRecord
 
   def total_cost
     quantity * price
+  end
+
+  def applied_discount
+    item.merchant.bulk_discounts
+    .where("quantity_threshold <= ?", self.quantity)
+    .order(percentage: :desc)
+    .first
   end
 end

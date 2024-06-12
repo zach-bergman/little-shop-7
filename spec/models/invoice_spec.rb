@@ -63,7 +63,11 @@ RSpec.describe Invoice, type: :model do
     it { should have_many :invoice_items }
     it { should have_many(:items).through(:invoice_items) }
     it { should have_many(:merchants).through(:items) }
-    # it { should belong_to :bulk_discount }
+  end
+
+  describe "validations" do
+    it { should validate_presence_of :status }
+    it { should validate_presence_of :customer_id }
   end
 
   describe 'enums' do
@@ -88,7 +92,7 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
-    describe "#total_revenue_for_invoice" do
+    describe "#total_revenue" do
       it 'calculates the total revenue for a merchant from an invoice' do
         merchant = create(:merchant, status: "enabled")
         customer = create(:customer)
@@ -98,7 +102,28 @@ RSpec.describe Invoice, type: :model do
         invoice_item_1 = create(:invoice_item, invoice: invoice, item: item_1, quantity: 2, unit_price: item_1.unit_price)
         invoice_item_2 = create(:invoice_item, invoice: invoice, item: item_2, quantity: 1, unit_price: item_2.unit_price)
 
-        expect(invoice.total_revenue_for_invoice(merchant)).to eq(400)
+        expect(invoice.total_revenue).to eq(400)
+      end
+    end
+
+    describe "#total_discount_for_invoice" do
+      it "returns the amount to be discounted for total revenue amount" do
+        merchant = create(:merchant, status: "enabled")
+        bulk_discount_1 = BulkDiscount.create!(name: "Bulk Discount 1", percentage: 20, quantity_threshold: 3, merchant_id: merchant.id)
+        bulk_discount_2 = BulkDiscount.create!(name: "Bulk Discount 2", percentage: 10, quantity_threshold: 2, merchant_id: merchant.id)
+        bulk_discount_3 = BulkDiscount.create!(name: "Bulk Discount 3", percentage: 20, quantity_threshold: 4, merchant_id: merchant.id)
+
+        customer = create(:customer)
+        invoice = create(:invoice, customer: customer)
+
+        item_1 = create(:item, merchant: merchant, unit_price: 100)
+        item_2 = create(:item, merchant: merchant, unit_price: 200)
+
+        invoice_item_1 = create(:invoice_item, invoice: invoice, item: item_1, quantity: 3, unit_price: item_1.unit_price)
+        invoice_item_2 = create(:invoice_item, invoice: invoice, item: item_2, quantity: 2, unit_price: item_2.unit_price)
+        invoice_item_3 = create(:invoice_item, invoice: invoice, item: item_2, quantity: 1, unit_price: item_2.unit_price)
+
+        expect(invoice.total_discount_for_invoice).to eq(100)
       end
     end
 
@@ -121,7 +146,7 @@ RSpec.describe Invoice, type: :model do
         transaction = create(:transaction, result: "success", invoice_id: invoice_A.id)
 
         # no bulk discounts should be applied.
-        expect(invoice_A.total_revenue_for_invoice(merchant_A)).to eq(75)
+        expect(invoice_A.total_revenue).to eq(75)
         expect(invoice_A.total_discounted_revenue_for_invoice).to eq(75) # no discount applied, since one item was not ordered 10 times to meet the quantity threshold of bulk discount.
 
         # The quantities of items ordered cannot be added together to meet the quantity thresholds, 
@@ -146,7 +171,7 @@ RSpec.describe Invoice, type: :model do
         transaction = create(:transaction, result: "success", invoice_id: invoice_A.id)
 
         # Item A should be discounted at 20% off. Item B should not be discounted.
-        expect(invoice_A.total_revenue_for_invoice(merchant_A)).to eq(125)
+        expect(invoice_A.total_revenue).to eq(125)
         expect(invoice_A.total_discounted_revenue_for_invoice).to eq(105.0)
 
         # If the quantity of an item ordered meets or exceeds the quantity threshold, then the percentage discount should apply to that item only. 
@@ -176,7 +201,7 @@ RSpec.describe Invoice, type: :model do
         transaction = create(:transaction, result: "success", invoice_id: invoice_A.id)
 
         # Item A should discounted at 20% off, and Item B should discounted at 30% off.
-        expect(invoice_A.total_revenue_for_invoice(merchant_A)).to eq(195)
+        expect(invoice_A.total_revenue).to eq(195)
         expect(invoice_A.total_discounted_revenue_for_invoice).to eq(148.5)
 
         # Item A meets the quantity threshold for Bulk Discount A: 120 - 20% = 96
@@ -203,7 +228,7 @@ RSpec.describe Invoice, type: :model do
         transaction = create(:transaction, result: "success", invoice_id: invoice_A.id)
 
         # Both Item A and Item B should discounted at 20% off. Additionally, there is no scenario where Bulk Discount B can ever be applied.
-        expect(invoice_A.total_revenue_for_invoice(merchant_A)).to eq(195)
+        expect(invoice_A.total_revenue).to eq(195)
         expect(invoice_A.total_discounted_revenue_for_invoice).to eq(156.0)
 
         # If an item meets the quantity threshold for multiple bulk discounts, only the one with the greatest percentage discount should be applied
@@ -238,14 +263,11 @@ RSpec.describe Invoice, type: :model do
         invoice_item_B = InvoiceItem.create!(quantity: 15, unit_price: item_B.unit_price, status: "shipped", item_id: item_B.id, invoice_id: invoice_A.id)
 
         # Item A1 should discounted at 20% off, and Item A2 should discounted at 30% off.
-        expect(invoice_A.total_revenue_for_invoice(merchant_A)).to eq(195)
+        expect(invoice_A.total_revenue).to eq(270)
         expect(invoice_A.total_discounted_revenue_for_invoice).to eq(223.5)
         # Item A1 meets the quantity threshold for Bulk Discount A: 12 x 10 = 120, 120 - 20% = 96
         # Item A2 meets the quantity threshold for Bulk Discount B: 15 x 5 = 75, 75 - 30% = 52.5
         # 96 + 52.5 + 75(cost of invoice_item_B without discount) = 148.5
-
-        # Bulk discounts for one merchant should not affect items sold by another merchant. Item B should not be discounted.
-        expect(invoice_A.total_revenue_for_invoice(merchant_B)).to eq(75) # no discount applied
       end
     end
   end
