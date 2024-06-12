@@ -1,45 +1,47 @@
-<%= render "shared/admin_navbar"%>
+<%= render "shared/admin_navbar" %>
 
-<div id="invoice-info">
-  <div class="invoice-id">
-    <h1>Invoice #<%= @invoice.id %></h1>
-  </div>
+<div class="container">
+  <div id="invoice-info">
+    <div class="invoice-header">
+      <h1>Invoice #<%= @invoice.id %></h1>
+    </div>
 
-  <div class="revenues">
-    <h4>Revenue Expected Before and After Bulk Discounts</h4>
-    <p>Total Revenue: <%= @total_revenue %></p>
-    <p> Total Discounted Revenue: <%= number_to_currency(@invoice.total_discounted_revenue_for_invoice / 100.0) %></p>
-  </div>
+    <div class="revenues">
+      <h4>Revenue Expected Before and After Bulk Discounts</h4>
+      <p>Total Revenue: <%= number_to_currency(@total_revenue / 100.0) %></p>
+      <p>Total Discounted Revenue: <%= number_to_currency(@invoice.total_discounted_revenue_for_invoice / 100.0) %></p>
+    </div>
 
-  <div class="row">
-    <div class="column">
-      <%= form_with url: admin_invoice_path(@invoice), method: :patch, data: { turbo: false } do |f| %>
-        <%= f.label :status, "Status:" %>
-        <%= f.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
-        <%= f.submit "Update Invoice Status" %>
+    <div class="invoice-details">
+      <%= form_with url: admin_invoice_path(@invoice), method: :patch, data: { turbo: false }, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :status, "Status:" %>
+          <%= f.select :status, ["in progress", "completed", "cancelled"], selected: @invoice.status %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Update Invoice Status", class: "btn" %>
+        </div>
       <% end %>
 
-      <p>Status: <%= @invoice.status %></p>
-      <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
-      <div id="total-revenue">
-        <p>Total Revenue: <%= number_to_currency(@total_revenue) %></p>
-      </div>
-      <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
+      <p><strong>Status:</strong> <%= @invoice.status %></p>
+      <p><strong>Created on:</strong> <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
+      <p><strong>Customer:</strong> <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
     </div>
-  </div>
     
-  <div class="column">
-    <h2>Invoice Items</h2>
-    <div id="invoice-items">
-    <% @invoice_items.each do |invoice_item| %>
-      <div class="invoice_item">
-        <p>Invoice Item: <%= invoice_item.item.name %></p>
-        <p>Quantity: <%= invoice_item.quantity %></p>
-        <p>Price: <%= number_to_currency(invoice_item.unit_price) %></p>
-        <p>Status: <%= invoice_item.status %></p>
-      </div>
+    <div class="invoice-items">
+      <h2>Invoice Items</h2>
+      <% @invoice_items.each do |invoice_item| %>
+        <div class="invoice-item">
+          <p><strong>Item:</strong> <%= invoice_item.item.name %></p>
+          <p><strong>Quantity:</strong> <%= invoice_item.quantity %></p>
+          <p><strong>Price:</strong> <%= number_to_currency(invoice_item.unit_price) %></p>
+          <p><strong>Status:</strong> <%= invoice_item.status %></p>
+        </div>
       <% end %>
     </div>
-</div>
 
-<%= link_to "Back to Invoices", admin_invoices_path %>
+    <div class="back-link">
+      <%= link_to "Back to Invoices", admin_invoices_path, class: "btn" %>
+    </div>
+  </div>
+</div>

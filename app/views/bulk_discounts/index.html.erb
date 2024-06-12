@@ -1,20 +1,23 @@
 <%= render "shared/merchant_navbar" %>
 
-<div class="row">
-  <div class="column">
-    <div class="bulk_discounts_list">
-      <% @bulk_discounts.each do |bulk_discount| %>
+<div class="container">
+  <h2>Bulk Discounts</h2>
+  <div class="bulk-discounts-list">
+    <% @bulk_discounts.each do |bulk_discount| %>
+      <div class="bulk-discount-item">
         <ul>
-          <li><%= link_to "#{bulk_discount.name}", merchant_bulk_discount_path(@merchant.id, bulk_discount.id) %></li>
+          <li><%= link_to bulk_discount.name, merchant_bulk_discount_path(@merchant.id, bulk_discount.id) %></li>
           <li>Percentage Discount: <%= bulk_discount.percentage %>%</li>
           <li>Quantity Threshold: <%= bulk_discount.quantity_threshold %></li>
-          <li><%= button_to "Delete #{bulk_discount.name}", merchant_bulk_discount_path(@merchant.id, bulk_discount), method: :delete %></li>
+          <li>
+            <%= button_to "Delete #{bulk_discount.name}", merchant_bulk_discount_path(@merchant.id, bulk_discount), method: :delete, class: "delete-button" %>
+          </li>
         </ul>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
-</div>
 
-<div class="new_bulk_discount_link">
-  <%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant) %>
+  <div class="new-bulk-discount-link">
+    <%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant), class: "btn" %>
+  </div>
 </div>

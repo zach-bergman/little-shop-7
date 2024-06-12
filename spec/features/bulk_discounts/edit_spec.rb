@@ -9,7 +9,7 @@ RSpec.describe "Merchant Bulk Discount Edit Page" do
 
         visit edit_merchant_bulk_discount_path(merchant_1.id, bulk_discount_1.id)
 
-        within("div.bulk_discount_edit_form") do
+        within("div.bulk-discount-edit-form") do
           expect(page).to have_selector("form")
           expect(page).to have_field(:name, with: bulk_discount_1.name)
           expect(page).to have_field(:percentage, with: bulk_discount_1.percentage)
@@ -23,7 +23,7 @@ RSpec.describe "Merchant Bulk Discount Edit Page" do
 
         visit edit_merchant_bulk_discount_path(merchant_1.id, bulk_discount_1.id)
 
-        within("div.bulk_discount_edit_form") do
+        within("div.bulk-discount-edit-form") do
           fill_in(:name, with: "New Bulk Discount")
           fill_in(:percentage, with: 50)
           fill_in(:quantity_threshold, with: 25)
@@ -39,7 +39,7 @@ RSpec.describe "Merchant Bulk Discount Edit Page" do
 
         visit edit_merchant_bulk_discount_path(merchant_1.id, bulk_discount_1.id)
 
-        within("div.bulk_discount_edit_form") do
+        within("div.bulk-discount-edit-form") do
           fill_in(:name, with: "New Bulk Discount")
           expect(page).to have_field(:percentage, with: bulk_discount_1.percentage)
           expect(page).to have_field(:quantity_threshold, with: bulk_discount_1.quantity_threshold)
@@ -48,7 +48,7 @@ RSpec.describe "Merchant Bulk Discount Edit Page" do
 
         expect(current_path).to eq(merchant_bulk_discount_path(merchant_1.id, bulk_discount_1.id))
 
-        within("div.bulk_discount_info") do
+        within("div.bulk-discount-info") do
           expect(page).to have_content("Bulk Discount Name: New Bulk Discount")
           expect(page).to have_content("Percentage Discount: #{bulk_discount_1.percentage}%")
           expect(page).to have_content("Quantity Threshold: #{bulk_discount_1.quantity_threshold}")
@@ -63,7 +63,7 @@ RSpec.describe "Merchant Bulk Discount Edit Page" do
 
         visit edit_merchant_bulk_discount_path(merchant_1.id, bulk_discount_1.id)
 
-        within("div.bulk_discount_edit_form") do
+        within("div.bulk-discount-edit-form") do
           fill_in(:name, with: "New Bulk Discount")
           fill_in(:percentage, with: 50)
           fill_in(:quantity_threshold, with: 25)
@@ -72,7 +72,7 @@ RSpec.describe "Merchant Bulk Discount Edit Page" do
 
         expect(current_path).to eq(merchant_bulk_discount_path(merchant_1.id, bulk_discount_1.id))
 
-        within("div.bulk_discount_info") do
+        within("div.bulk-discount-info") do
           expect(page).to have_content("Bulk Discount Name: New Bulk Discount")
           expect(page).to have_content("Percentage Discount: 50%")
           expect(page).to have_content("Quantity Threshold: 25")
@@ -87,7 +87,7 @@ RSpec.describe "Merchant Bulk Discount Edit Page" do
 
         visit edit_merchant_bulk_discount_path(merchant_1.id, bulk_discount_1.id)
 
-        within("div.bulk_discount_edit_form") do
+        within("div.bulk-discount-edit-form") do
           fill_in(:name, with: "New Bulk Discount")
           fill_in(:percentage, with: "Fifty")
           fill_in(:quantity_threshold, with: 25)
